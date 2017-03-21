@@ -176,7 +176,6 @@ cd ~/sonic-track
 #------------------------------------------------------------------------------
 function do_main_menu ()
 {
-  init_status
   SELECTION=$(whiptail --title "Camerafeed Install" --menu "Arrow/Enter Selects or Tab Key" 20 70 10 --cancel-button Quit --ok-button Select \
   "a " "Raspbian Jessie Update, Upgrade and rpi-update" \
   "b " "sound-track Install Dependencies" \
