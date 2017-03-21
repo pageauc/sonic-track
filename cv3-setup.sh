@@ -172,7 +172,12 @@ function do_main_menu ()
       c\ *) do_cv3_install ;; 
       d\ *) nano ~/sonic-track/config.py ;;
       e\ *) do_about ;;
-      q\ *) clear
+      q\ *) echo "To Run sonic-track run the following commands"
+            echo ""
+            echo "cd ~/sonic-track"
+            echo "./sonic-track.sh"
+            echo ""
+            echo "Good Luck ..."
             exit 0 ;;
          *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
     esac || whiptail --msgbox "There was an error running selection $SELECTION" 20 60 1
@@ -182,11 +187,4 @@ function do_main_menu ()
 while true; do
    do_main_menu
 done
-
-echo "To Run sonic-track run the following command"
-echo ""
-echo "cd ~/sonic-track"
-echo "./sonic-track.sh"
-echo ""
-echo "Good Luck ..."
 
