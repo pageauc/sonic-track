@@ -53,20 +53,20 @@ random movement to see what sounds are generated.  This is just a very basic
 setup but more elaborate sonic-pi sound generation algorithms are possible. 
 
 ### Prerequisites
-Requires a Raspberry Pi computer running with an up-to-date raspbian distro and a
-RPI camera module installed and configured. The dependencies may be 
-installed per setup.sh depending on your previous installs.  This demo requires
-opencv3 that can be installed via setup.sh menu picks (if required)
+
+* Requires a quad core Raspberry Pi computer running with an up-to-date raspbian Jessie distro
+* RPI camera module installed and configured. 
+* Dependencies will be installed via setup.sh depending on your previous installs.  
+* opencv3 is required and can be installed via setup.sh menu picks (if required)
+* sonic-pi is installed as part of the Jessie full install distro (not Lite)
+* Powered speaker including cables between RPI 3.5 mm audio/video plug and speaker
 You will also need a speaker plugged into the 3.5mm audio/video jack
 similar to these cables https://www.adafruit.com/product/2881 
 or https://www.amazon.com/Parts-Express-3-5mm-Plug-Cable/dp/B0007V6JCK  
-these are lso 
-available from other vendors.  Just google 3.5mm audio/video jack
-
-You may also need a cable similar to this 
+these are also available from other vendors.  Just google 3.5mm audio/video jack
+* You may also need a cable similar to this 
 https://www.amazon.com/P316-06N-6-Inch-Stereo-Splitter-Adapter/dp/B00M5FKF9E/ref=sr_1_1?ie=UTF8&qid=1490056641&sr=8-1&keywords=35+mm+rca+audio+cable
-
-depending on the powered speaker audio in requirements.
+depending on the powered speaker audio IN connection requirements.
 
 ### Change Settings
 
