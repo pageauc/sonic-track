@@ -73,7 +73,12 @@ take a look at the code to see how it works, change variables or game logic.
 ### Introduction
 I did quite a bit of searching on the internet, github, etc, but could not
 at the time find a similar python picamera implementation that returns x,y coordinates of
-the moving objects in the frame although some came close.  
+the moving objects in the frame although some came close.  This demo app sends 
+movement data to sonic-pi via psonic.py and pythonosc.  You will need a pi camera and a powered speaker
+connected to the Raspberry Pi audio/video plug via appropriate cables.
+I thought it would be interesting to point the camera at a fish tank or other source of
+random movement to see what sounds are generated.  This is just a very basic
+setup but more elaborate sonic-pi sound generation algorithms are possible. 
 
 ### Prerequisites
 Requires a Raspberry Pi computer running with an up-to-date raspbian distro and a
