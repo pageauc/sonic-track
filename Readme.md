@@ -31,11 +31,14 @@ From SSH session, console or GUI desktop terminal session execute the following 
     cd ~/sonic-track
     ./sonic-track.sh   
     
-### sonic-track.py - Sonic Track Demo - Basic concept of tracking moving objects
-This Demo program detects motion in the field of view and uses opencv to calculate the 
-contours above a minimum size and return the x,y coordinate. These x,y values are then
-sent to sonic-pi via psonic.py and pythonosc.  sonic-track.sh can run in a SSH terminal
-session only. the sonic-pi gui will be launched via xauth display commands 
+### sonic-track.py - Basic concept of tracking moving objects
+This Demo program detects motion in the field of view using opencv3 commands and returns movement 
+contours above a minimum size and returns the x,y,h,w of the movement contours. These values are then
+sent to sonic-pi via psonic.py and pythonosc.  sonic-track.sh can run in a SSH terminal 
+session only. The sonic-pi gui will be launched via xauth display commands.  Make sure the 
+Raspberry Pi Jessie OS pixel GUI desktop is running.  This demo needs to run on
+a quad core raspberry pi with the latest Jessie build installed.
+ 
 * Motion Track Demo YouTube Video http://youtu.be/09JS7twPBsQ  
 * GitHub Repo https://github.com/pageauc/sonic-track
 
