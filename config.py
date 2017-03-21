@@ -21,9 +21,13 @@ CAMERA_HFLIP = False
 CAMERA_VFLIP = False
 CAMERA_ROTATION=0
 CAMERA_FRAMERATE = 5
-FRAME_COUNTER = 1000
 
 # Motion Tracking Settings
 MIN_AREA = 50       # excludes all contours less than or equal to this Area
 THRESHOLD_SENSITIVITY = 25
 BLUR_SIZE = 10
+
+# notes
+
+notes_midi = [59,60,62,64,65,67,69,71,72]  # available notes to play
+notes_delay = 0.5  # Delay between notes played
