@@ -1,6 +1,6 @@
 #!/bin/bash
 # Convenient sonic-track-install.sh script written by Claude Pageau 1-Jul-2016
-ver="0.10"
+ver="0.20"
 DEST_DIR='sonic-track'  # Default folder install location
 
 cd ~
@@ -33,14 +33,14 @@ if [ -e config.py ]; then
   echo "Backup config.py to config.py.prev"
   cp config.py config.py.prev
 else
-  wget -O config.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/config.py     
+  wget -O config.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/config.py     
 fi
 
-wget -O config-new.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/config.py
+wget -O config-new.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/config.py
 if [ $? -ne 0 ] ;  then
-  wget -O config.py https://raw.github.com/pageauc/sonic-track/master/source/config.py
-  wget -O sonic-track.sh https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.sh  
-  wget -O sonic-track.py https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.py
+  wget -O config.py https://raw.github.com/pageauc/sonic-track/master/config.py
+  wget -O sonic-track.sh https://raw.github.com/pageauc/sonic-track/master/sonic-track.sh  
+  wget -O sonic-track.py https://raw.github.com/pageauc/sonic-track/master/sonic-track.py
   wget -O setup.sh https://raw.github.com/pageauc/sonic-track/master/setup.sh  
   wget -O cv3-setup.sh https://raw.github.com/pageauc/sonic-track/master/cv3-setup.sh
   wget -O Readme.md https://raw.github.com/pageauc/sonic-track/master/Readme.md
