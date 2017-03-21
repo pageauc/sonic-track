@@ -17,5 +17,5 @@ else
 fi
 
 echo "INFO - starting sonic-track.py"
-./sound-track.py
+./sonic-track.py
 
