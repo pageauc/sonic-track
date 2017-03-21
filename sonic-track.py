@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 progname = "sonic_track.py"
-ver = "ver 0.10"
+ver = "ver 0.20"
 
 print("%s %s using sonic-pi, pi-camera, python3 and OpenCV" % (progname, ver))
 print("Loading Please Wait ....")
@@ -108,7 +108,6 @@ def play_notes(x, y, w, h):
   # use_synth(PROPHET)
    x_idx = int( x / x_zone )
    y_idx = int( y / y_zone )
-   print("xy_idx(%i,%i)" %( x_idx, y_idx ))
    note1 = notes_midi[x_idx]
    note2 = notes_midi[y_idx] 
    print("xy(%i,%i) xy(idx=%i,%i) note1=%i note2=%i" %( x, y, x_idx, y_idx, note1, note2 ))
