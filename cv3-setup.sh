@@ -70,10 +70,9 @@ function do_cv3_dep ()
    wget https://bootstrap.pypa.io/get-pip.py
    sudo python get-pip.py
    sudo pip install numpy
-   do_any_key   
    echo "Download and unzip opencv 3.0.0"
    echo "-------------------------------"    
-   # Install opencv3 download and unzip
+   # Install opencv3 ver 3.0.0 download and unzip
    wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.0.0.zip 
    unzip opencv.zip 
    do_anykey
@@ -83,7 +82,8 @@ function do_cv3_install ()
 {
    cd ~/
    echo "cmake prior to compiling opencv 3.0.0"
-   echo "-----------------------------------"       
+   echo "-------------------------------------"
+   echo "This will take a few minutes ...."   
    # Compile opencv3 for RPI
    cd ~/opencv-3.0.0/
    mkdir build

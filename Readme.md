@@ -1,4 +1,4 @@
-# Raspberry Pi Sonic Track Demo
+# Raspberry Pi Sonic-pi Motion Track Demo
 ### Track x,y moving object positions and generate sounds via sonic-pi.  
 ### Uses pi-camera, python3, Opencv3, python-sonic, pythonosc and sonic-pi 
 
@@ -22,9 +22,28 @@ From logged in RPI SSH session or console terminal perform the following.
     chmod +x setup.sh
     ./setup.sh
 
+### Opencv3 Install
+This program requires opencv3 to be installed on the latest RPI Jessie disto.  I have written a menu driven
+install script if you do not have opencv3 already installed.  
+This is a somewhat automate menu driven install of opencv 3.0.0
+I tried opencv 3.2.0 but had errors so it is best to stick with 3.0.0 per this script.
+To Run the whiptail menu setup script.  From a logged in ssh or terminal session run
+
+    cd ~/sonic-track
+    ./cv3-setup.sh    
+ 
+You will be asked to reboot at certain steps.  The script will install Raspberry Pi update, upgrade, rpi-update,
+install/update opencv3 dependencies, get opencv3 source, perform opencv3 cmake, compile and install
+
+More information is available here http://www.pyimagesearch.com/2015/10/26/how-to-install-opencv-3-on-raspbian-jessie/ 
+    
 ### How to Run
-Default is console only display. Use Nano to Edit config.py variable window_on = True
-to display the opencv tracking window on GUI desktop. See other variables
+Default is SSH or Terminal console only display. Use Nano to Edit config.py variables and available
+notes_midi and notes_delay.  To display opencv window on Raspberry Pi desktop set 
+
+    window_on = True
+
+This will display the opencv tracking window on GUI desktop. See other variables
 and descriptions for additional variable customization settings.
 From SSH session, console or GUI desktop terminal session execute the following commands 
 
