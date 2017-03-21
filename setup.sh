@@ -41,15 +41,15 @@ if [ $? -ne 0 ] ;  then
   wget -O config.py https://raw.github.com/pageauc/sonic-track/master/source/config.py
   wget -O sonic-track.sh https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.sh  
   wget -O sonic-track.py https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.py
-  wget -O setup.sh https://raw.github.com/pageauc/sonic-track/master/source/setup.sh  
-  wget -O cv3-setup.sh https://raw.github.com/pageauc/sonic-track/master/source/cv3-setup.sh
+  wget -O setup.sh https://raw.github.com/pageauc/sonic-track/master/setup.sh  
+  wget -O cv3-setup.sh https://raw.github.com/pageauc/sonic-track/master/cv3-setup.sh
   wget -O Readme.md https://raw.github.com/pageauc/sonic-track/master/Readme.md
   wget -O psonic.py https://raw.github.com/gkvoelkl/python-sonic/master/psonic.py
 else
-  wget -O sonic-track.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.sh
-  wget -O sonic-track.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.py
-  wget -O setup.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/setup.sh 
-  wget -O cv3-setup.sh -q --show-progress  https://raw.github.com/pageauc/sonic-track/master/source/cv3-setup.sh  
+  wget -O sonic-track.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/sonic-track.sh
+  wget -O sonic-track.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/sonic-track.py
+  wget -O setup.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/setup.sh 
+  wget -O cv3-setup.sh -q --show-progress  https://raw.github.com/pageauc/sonic-track/master/cv3-setup.sh  
   wget -O Readme.md -q --show-progress https://raw.github.com/pageauc/sonic-track/master/Readme.md
   wget -O psonic.py -q --show-progress https://raw.github.com/gkvoelkl/python-sonic/master/psonic.py
 fi
