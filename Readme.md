@@ -1,6 +1,6 @@
-# Raspberry Pi sonic track Demo
-### Track x,y moving object positions and generate notes via sonic-pi.  
-####  Uses python3, pi-camera, Opencv3 and sonic-pi to 
+# Raspberry Pi Sonic Track Demo
+### Track x,y moving object positions and generate sounds via sonic-pi.  
+### Uses pi-camera, python3, Opencv3, pythonosc and sonic-pi 
 
 ### Quick Install   
 Easy Install of sonic-track onto a Raspberry Pi Computer with latest Raspbian.
