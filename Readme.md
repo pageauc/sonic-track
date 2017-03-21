@@ -1,6 +1,6 @@
 # Raspberry Pi Sonic Track Demo
 ### Track x,y moving object positions and generate sounds via sonic-pi.  
-### Uses pi-camera, python3, Opencv3, pythonosc and sonic-pi 
+### Uses pi-camera, python3, Opencv3, python-sonic, pythonosc and sonic-pi 
 
 ### Quick Install   
 Easy Install of sonic-track onto a Raspberry Pi Computer with latest Raspbian.
@@ -38,37 +38,6 @@ sent to sonic-pi via psonic.py and pythonosc.  sonic-track.sh can run in a SSH t
 session only. the sonic-pi gui will be launched via xauth display commands 
 * Motion Track Demo YouTube Video http://youtu.be/09JS7twPBsQ  
 * GitHub Repo https://github.com/pageauc/sonic-track
-
-## ---------- Other Raspberry Pi Projects Based on Motion Tracking ------------
-
-### speed-camera.py - Object (vehicle) speed camera based on motion tracking
-Tracks vehicle speeds or other moving objects in real time and records image 
-and logs data. Now improved using threading for video stream and clipping of 
-area of interest for greater performance.  
-* GitHub Repo https://github.com/pageauc/rpi-speed-camera
-* YouTube Speed Camera Video https://youtu.be/eRi50BbJUro  
-* RPI forum post https://www.raspberrypi.org/forums/viewtopic.php?p=1004150#p1004150  
-
-### cam-track.py - Tracks camera x y movements
-Uses a clipped search image rectangle to search subsequent video stream images and returns
-the location. Can be used for tracking camera x y movements for stabilization,
-robotics, Etc.  
-* GitHub Repo https://github.com/pageauc/rpi-cam-track
-* YouTube Cam-Track Video https://www.youtube.com/edit?video_id=yjA3UtwbD80   
-* Code Walkthrough YouTube Video https://youtu.be/lkh3YbbNdYg        
-* RPI Forum Post https://www.raspberrypi.org/forums/viewtopic.php?p=1027463#p1027463   
-
-### hotspot-game.py - A simple motion tracking game
-The game play involves using streaming video of body motion to get as many hits 
-as possible inside shrinking boxes that randomly move around the screen. 
-Position the camera so you can see body motions either close or standing. 
-Pretty simple but I think kids would have fun with it and they just might 
-take a look at the code to see how it works, change variables or game logic.      
-* GitHub hotspot-game Repo https://github.com/pageauc/hotspot-game 
-* YouTube Hotspot Gam Video https://youtu.be/xFl3lmbEO9Y       
-* RPI Forum Post https://www.raspberrypi.org/forums/viewtopic.php?p=1026124#p1026124   
-
-## ----------------------------------------------------------------------------
 
 ### Introduction
 I did quite a bit of searching on the internet, github, etc, but could not
@@ -126,6 +95,37 @@ Kyle Hounslow using C here https://www.youtube.com/watch?v=X6rPdRZzgjg
 Thanks to Adrian Rosebrock jrosebr1 at http://www.pyimagesearch.com 
 for the PiVideoStream Class code available on github at
 https://github.com/jrosebr1/imutils/blob/master/imutils/video/pivideostream.py
+
+## ---------- Other Raspberry Pi Projects Based on Motion Tracking ------------
+
+### speed-camera.py - Object (vehicle) speed camera based on motion tracking
+Tracks vehicle speeds or other moving objects in real time and records image 
+and logs data. Now improved using threading for video stream and clipping of 
+area of interest for greater performance.  
+* GitHub Repo https://github.com/pageauc/rpi-speed-camera
+* YouTube Speed Camera Video https://youtu.be/eRi50BbJUro  
+* RPI forum post https://www.raspberrypi.org/forums/viewtopic.php?p=1004150#p1004150  
+
+### cam-track.py - Tracks camera x y movements
+Uses a clipped search image rectangle to search subsequent video stream images and returns
+the location. Can be used for tracking camera x y movements for stabilization,
+robotics, Etc.  
+* GitHub Repo https://github.com/pageauc/rpi-cam-track
+* YouTube Cam-Track Video https://www.youtube.com/edit?video_id=yjA3UtwbD80   
+* Code Walkthrough YouTube Video https://youtu.be/lkh3YbbNdYg        
+* RPI Forum Post https://www.raspberrypi.org/forums/viewtopic.php?p=1027463#p1027463   
+
+### hotspot-game.py - A simple motion tracking game
+The game play involves using streaming video of body motion to get as many hits 
+as possible inside shrinking boxes that randomly move around the screen. 
+Position the camera so you can see body motions either close or standing. 
+Pretty simple but I think kids would have fun with it and they just might 
+take a look at the code to see how it works, change variables or game logic.      
+* GitHub hotspot-game Repo https://github.com/pageauc/hotspot-game 
+* YouTube Hotspot Gam Video https://youtu.be/xFl3lmbEO9Y       
+* RPI Forum Post https://www.raspberrypi.org/forums/viewtopic.php?p=1026124#p1026124   
+
+## ----------------------------------------------------------------------------
   
 Have Fun   
 Claude Pageau    
