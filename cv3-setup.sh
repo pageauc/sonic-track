@@ -154,7 +154,7 @@ cd ~/sonic-track
 #------------------------------------------------------------------------------
 function do_main_menu ()
 {
-  SELECTION=$(whiptail --title "sonic-track Install" --menu "Arrow/Enter Selects or Tab Key" 20 70 10 --cancel-button Quit --ok-button Select \
+  SELECTION=$(whiptail --title "sonic-track opencv3 Install" --menu "Arrow/Enter Selects or Tab Key" 20 70 10 --cancel-button Quit --ok-button Select \
   "a " "Raspbian Jessie Update, Upgrade and rpi-update" \
   "b " "OpenCV3 Install Build Dependencies and Download Source" \
   "c " "OpenCV3 Make, Compile and Install" \
