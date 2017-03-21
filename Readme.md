@@ -39,17 +39,25 @@ More information is available here http://www.pyimagesearch.com/2015/10/26/how-t
     
 ### How to Run
 Default is SSH or Terminal console only display. Use Nano to Edit config.py variables and available
-notes_midi and notes_delay.  To display opencv window on Raspberry Pi desktop set 
-
-    window_on = True
-
-This will display the opencv tracking window on GUI desktop. See other variables
-and descriptions for additional variable customization settings.
+notes_midi and notes_delay. See other variables and comments for additional variable customization settings.  
 From SSH session, console or GUI desktop terminal session execute the following commands 
 
     cd ~/sonic-track
     ./sonic-track.sh   
+
+To display opencv window on Raspberry Pi desktop set config.py variable below. 
     
+    cd ~/sonic-track
+    nano config.py
+    
+in nano set the following variable then ctrl-x y to save change(s)
+
+    window_on = True
+
+With this variable setting you will need to run from the RPI GUI desktop per previous
+run commands above.  This 
+This will display the opencv tracking window on GUI desktop. 
+
 ### sonic-track.py - Basic concept of tracking moving objects
 This Demo program detects motion in the field of view using opencv3 commands and returns movement 
 contours above a minimum size and returns the x,y,h,w of the movement contours. These values are then
