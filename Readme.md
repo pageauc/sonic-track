@@ -80,6 +80,16 @@ Requires a Raspberry Pi computer running with an up-to-date raspbian distro and 
 RPI camera module installed and configured. The dependencies may be 
 installed per setup.sh depending on your previous installs.  This demo requires
 opencv3 that can be installed via setup.sh menu picks (if required)
+You will also need a speaker plugged into the 3.5mm audio/video jack
+similar to these cables https://www.adafruit.com/product/2881 
+or https://www.amazon.com/Parts-Express-3-5mm-Plug-Cable/dp/B0007V6JCK  
+these are lso 
+available from other vendors.  Just google 3.5mm audio/video jack
+
+You may also need a cable similar to this 
+https://www.amazon.com/P316-06N-6-Inch-Stereo-Splitter-Adapter/dp/B00M5FKF9E/ref=sr_1_1?ie=UTF8&qid=1490056641&sr=8-1&keywords=35+mm+rca+audio+cable
+
+depending on the powered speaker audio in requirements.
 
 ### Change Settings
 
