@@ -1,221 +1,106 @@
-#!/usr/bin/env bash
-# Script to assist with installing sonic-track and OpenCV3
-# If problems are encountered exit to command to try to resolve
-# Then retry menu pick again or continue to next step
+#!/bin/bash
+# Convenient sonic-track-install.sh script written by Claude Pageau 1-Jul-2016
+ver="0.10"
+DEST_DIR='sonic-track'  # Default folder install location
 
-function do_anykey ()
-{
-   echo "------------------------------"
-   echo "  Review messages for Errors"
-   echo "  Exit to Console to Resolve"
-   echo "------------------------------"
-   read -p "M)enu E)xit ?" choice
-   case "$choice" in
-      m|M ) echo "Back to Main Menu"
-       ;;
-      e|E ) echo "Install Aborted. Bye"
-            exit 1
-       ;;
-        * ) echo "invalid Selection"
-            exit 1 ;;
-   esac
-}
+cd ~
+if [ -d "$DEST_DIR" ] ; then
+  STATUS="Upgrade"
+  echo "Upgrade sonic-track files"
+else  
+  echo "New sonic-track Install"
+  STATUS="New Install"
+  mkdir -p $DEST_DIR
+  echo "$DEST_DIR Folder Created"
+fi 
 
-function do_rpi_update ()
-{
-   cd ~/
-   # Update Raspian to Lastest Releases
-   echo "Updating Raspbian Please Wait ..."
-   echo "---------------------------------"
-   sudo apt-get update
-   echo "Upgrading Rasbian Please Wait ..."
-   echo "---------------------------------"
-   sudo apt-get upgrade
-   # Perform rpi-update
-   echo "updating Raspbian rpi-update"
-   echo "----------------------------"
-   sudo rpi-update
-   echo "----------------------------"
-   echo "It is Time to Reboot after"
-   echo "updating Raspbian Jessie"
-   echo "----------------------------"
-   read -p "Reboot Now? (y/n)?" choice
-   case "$choice" in 
-     y|Y ) echo "yes"
-           echo "Rebooting Now"
-           sudo reboot
-           ;;
-     n|N ) echo "Back To Main Menu"
-           ;;
-       * ) echo "invalid Selection"
-           exit 1
-           ;;
-  esac
-}
+cd $DEST_DIR
+INSTALL_PATH=$( pwd )
 
-
-function do_dependencies ()
-{
-   cd ~/
-   # Install program Dependencies
-   echo "sonic-track.py - Installing Dependencies"
-   echo "------------------------------------"
-   echo "This will take a while Please Wait"
-   sudo apt-get install -y python-picamera
-   # Install opencv3 build dependencies
-   echo "Installing opencv3 build and run dependencies"
-   echo "---------------------------------------------"
-   sudo apt-get install -y build-essential git cmake pkg-config
-   sudo apt-get install -y libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
-   sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
-   sudo apt-get install -y libxvidcore-dev libx264-dev
-   sudo apt-get install -y libgtk2.0-dev
-   sudo apt-get install -y libatlas-base-dev gfortran
-   sudo apt-get install -y python2.7-dev python3-dev 
-   wget https://bootstrap.pypa.io/get-pip.py
-   sudo python get-pip.py
-   sudo pip install numpy
-   do_anykey
-}
-
-function do_cv3_get ()
-{
-   cd ~/
-   echo "Download and unzip opencv 3.0.0"
-   echo "-------------------------------"
-   # Install opencv3 download and unzip
-   wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.0.0.zip
-   unzip opencv.zip 
-   do_anykey
-}
-
-function do_cv3_install ()
-{
-   cd ~/
-   echo "cmake prior to compiling opencv 3.0.0"
-   echo "-----------------------------------"
-   # Compile opencv3 for RPI
-   cd ~/opencv-3.0.0/
-   mkdir build
-   cd build
-   cmake -D CMAKE_BUILD_TYPE=RELEASE \
-         -D CMAKE_INSTALL_PREFIX=/usr/local \
-         -D INSTALL_C_EXAMPLES=OFF \
-         -D INSTALL_PYTHON_EXAMPLES=ON \
-         -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.0.0/modules \
-         -D BUILD_EXAMPLES=ON ..
-      echo "--------------------------------"
-      echo " Check if cmake above had errors"
-      echo "--------------------------------"
-      echo "n exits to console"
-      read -p "Was cmake successful y/n ?" choice
-      case "$choice" in
-        y|Y ) echo "Compiling openCV3 ver 3.0.0"
-              echo "This will take approx 1h 40 min"
-              make -j4
-              echo "------------------------------------"
-              echo " Check if opencv compile had errors "
-              echo "------------------------------------"
-              read -p "Was Compile Successful y/n ?" choice
-              case "$choice" in
-                y|Y ) echo "Installing opencv 3.0.0"
-                      sudo make install
-                      ;;
-                n|N ) echo "Please Investigate Problem and Try Again"
-                      exit 1
-                      ;;
-                  * ) echo "invalid Selection"
-                      exit 1
-                      ;;
-              esac
-            ;;
-        n|N ) echo "cmake failed so Investigate Problem and Try again"
-              exit 1
-              ;;
-          * ) echo "invalid Selection"
-              exit 1
-              ;;
-      esac
-}
-
-
-#------------------------------------------------------------------------------
-function do_about()
-{
-  whiptail --title "About" --msgbox " \
-   sonic-track project Install Assist
-      written by Claude Pageau
-
-This Menu will help install the sonic-track
-project, dependencies and optionally Opencv 3
-Note python libraries will be installed
-to /usr/local/lib/python3.4/dist-packages
-and /usr/local/lib/python2.7/dist-packages
-
-You can run sonic-track from a Desktop Terminal
-or SSH console (cannot view video feed)
-
-To view GUI desktop opencv window per config.py
-set variable below
-
-show_window  True
-
-To Run from desktop terminal or console
-depending on how you have things configured
-Run
-
-cd ~/sonic-track
-./sonic-track.sh
-
-             Good Luck 
-\
-" 35 70 35
-}
-
-
-#------------------------------------------------------------------------------
-function do_main_menu ()
-{
-  SELECTION=$(whiptail --title "Camerafeed Install" --menu "Arrow/Enter Selects or Tab Key" 20 70 10 --cancel-button Quit --ok-button Select \
-  "a " "Raspbian Jessie Update, Upgrade and rpi-update" \
-  "b " "sound-track Install Dependencies" \
-  "c " "OpenCV3 Download and Unzip" \
-  "d " "OpenCV3 Make, Compile and Install" \
-  "e " "Edit sonic-track config.py" \
-  "f " "Run sonic-track.sh" \
-  "g " "Stop sonic-track incl sonic-pi"
-  "h " "About" \
-  "q " "Quit Menu Back to Console"  3>&1 1>&2 2>&3)
-
-  RET=$?
-  if [ $RET -eq 1 ]; then
-    exit 0
-  elif [ $RET -eq 0 ]; then
-    case "$SELECTION" in
-      a\ *) do_rpi_update ;;
-      b\ *) do_dependencies ;;
-      c\ *) do_cv3_get;;
-      d\ *) do_cv3_install ;;
-      e\ *) nano ~/sonic-track/config.py ;;
-      f\ *) ./sonic-track.sh ;;
-      f\ *) sudo kill $(pgrep -f sonic-pi)
-            sudo kill $(pgrep -f sonic-track.sh) ;;
-      h\ *) do_about ;;
-      q\ *) clear
-            exit 0 ;;
-         *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
-    esac || whiptail --msgbox "There was an error running selection $SELECTION" 20 60 1
+# Remember where this script was launched from
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "-------------------------------------------------------------"
+echo "      sonic-track setup.sh script ver $ver"
+echo "Install or Upgrade sonic-track motion activated notes"
+echo "-------------------------------------------------------------"
+echo "1 - Downloading sonic-track github repo files"
+echo ""
+if [ -e config.py ]; then
+  if [ ! -e config.py.orig ]; then
+     echo "Save config.py to config.py.orig"
+     cp config.py config.py.orig
   fi
-}
+  echo "Backup config.py to config.py.prev"
+  cp config.py config.py.prev
+else
+  wget -O config.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/config.py     
+fi
 
-while true; do
-   do_main_menu
-done
+wget -O config-new.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/config.py
+if [ $? -ne 0 ] ;  then
+  wget -O config.py https://raw.github.com/pageauc/sonic-track/master/source/config.py
+  wget -O sonic-track.sh https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.sh  
+  wget -O sonic-track.py https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.py
+  wget -O setup.sh https://raw.github.com/pageauc/sonic-track/master/source/setup.sh  
+  wget -O cv3-setup.sh https://raw.github.com/pageauc/sonic-track/master/source/cv3-setup.sh
+  wget -O Readme.md https://raw.github.com/pageauc/sonic-track/master/Readme.md
+  wget -O psonic.py https://raw.github.com/gkvoelkl/python-sonic/master/psonic.py
+else
+  wget -O sonic-track.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.sh
+  wget -O sonic-track.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/sonic-track.py
+  wget -O setup.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/source/setup.sh 
+  wget -O cv3-setup.sh -q --show-progress  https://raw.github.com/pageauc/sonic-track/master/source/cv3-setup.sh  
+  wget -O Readme.md -q --show-progress https://raw.github.com/pageauc/sonic-track/master/Readme.md
+  wget -O psonic.py -q --show-progress https://raw.github.com/gkvoelkl/python-sonic/master/psonic.py
+fi
+  
+echo "Done Download"
+echo "-------------------------------------------------------------"
+echo "2 - Make Required Files Executable"
+echo ""
+chmod +x *py
+chmod -x config*py
+chmod -x psonic*py
+chmod +x *sh
+echo "Done Permissions"
+echo "-------------------------------------------------------------"
+# check if system was updated today
+NOW="$( date +%d-%m-%y )"
+LAST="$( date -r /var/lib/dpkg/info +%d-%m-%y )"
+if [ "$NOW" == "$LAST" ] ; then
+  echo "4 Raspbian System is Up To Date"
+  echo ""  
+else
+  echo "3 - Performing Raspbian System Update"
+  echo "    This Will Take Some Time ...."
+  echo ""
+  sudo apt-get -y update
+  echo "Done Update"
+  echo "-------------------------------------------------------------"
+  echo "4 - Performing Raspbian System Upgrade"
+  echo "    This Will Take Some Time ...."
+  echo ""
+  sudo apt-get -y upgrade
+  echo "Done Upgrade"
+fi  
+echo "------------------------------------------------"
+echo ""  
+echo "5 - Installing sonic-track Dependencies"
+echo ""
+sudo apt-get install -yq python-picamera python-pip dos2unix
+sudo pip3 install python-osc
 
-echo "Try running sonic-track App"
-echo "Edit the ~/sonic-track/config.py and set pi=True for pi-camera module"
-echo "Run Putty SSH or Pi desktop terminal session then"
-echo "cd ~/sonic-track"
-echo "./sonic-track.sh"
-echo "Good Luck ..."
+cd $DIR
+# Check if install.sh was launched from sonic-track folder
+if [ "$DIR" != "$INSTALL_PATH" ]; then
+  if [ -e 'setup.sh' ]; then
+    echo "$STATUS Cleanup setup.sh"
+    rm setup.sh
+  fi
+fi
+
+echo "Done Dependencies"
+
+echo $DEST_DIR "Good Luck Claude ..."
+echo "Bye"
 

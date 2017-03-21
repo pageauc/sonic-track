@@ -210,10 +210,10 @@ python3 run.py
 #------------------------------------------------------------------------------
 function do_main_menu ()
 {
-  SELECTION=$(whiptail --title "Camerafeed Install" --menu "Arrow/Enter Selects or Tab Key" 20 70 10 --cancel-button Quit --ok-button Select \
+  SELECTION=$(whiptail --title "sonic-track Install" --menu "Arrow/Enter Selects or Tab Key" 20 70 10 --cancel-button Quit --ok-button Select \
   "a " "Raspbian Jessie Update, Upgrade and rpi-update" \
-  "b " "Camerafeed Clone from GitHub and Install libs" \
-  "c " "Camerafeed Install Dependencies" \
+  "b " "sonic-track Install Files" \
+  "c " "sonic-track Install Dependencies" \
   "d " "OpenCV3 Download and Unzip" \
   "e " "OpenCV3 Install Build Dependencies " \
   "f " "OpenCV3 Make, Compile and Install" \
@@ -232,7 +232,7 @@ function do_main_menu ()
       d\ *) do_cv3_get;;
       e\ *) do_cv3_dep ;;
       f\ *) do_cv3_install ;; 
-      g\ *) nano ~/Feedcamera/settings.ini ;;
+      g\ *) nano ~/sonic-track/config.py ;;
       h\ *) do_about ;;
       q\ *) clear
             exit 0 ;;
