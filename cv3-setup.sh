@@ -1,7 +1,8 @@
 #!/bin/bash
-# Script to assist with installing Camerafeed and OpenCV3
+# Script to assist with installing sonic-track and OpenCV3
 # If problems are encountered exit to command to try to resolve
 # Then retry menu pick again or continue to next step
+# version 0.20
 
 function do_anykey ()
 {
@@ -53,45 +54,6 @@ function do_rpi_update ()
   esac
 }
 
-function do_camerafeed_clone ()
-{
-   cd ~/  
-   # Clone Camerafeed Repo
-   echo "Cloning Camerafeed from Github"
-   echo "------------------------------"     
-   echo "Please wait ...."
-   git clone https://github.com/liquidg3/Camerafeed
-   # Copy class libraries to local lib
-   echo "copy ~/Camerafeed/camerafeed/ /usr/local/lib/python2.7/dist-packages"
-   echo "--------------------------------------------------------------------"     
-   sudo cp -r ~/Camerafeed/camerafeed/ /usr/local/lib/python2.7/dist-packages
-   echo "copy ~/Camerafeed/camerafeed/ /usr/local/lib/python3.4/dist-packages"
-   echo "--------------------------------------------------------------------"      
-   sudo cp -r ~/Camerafeed/camerafeed/ /usr/local/lib/python3.4/dist-packages
-   do_anykey
-}
-
-function do_camerafeed_dep ()
-{
-   cd ~/
-   # Install program Dependencies
-   echo "Camerafeed - Installing Dependencies"
-   echo "------------------------------------"       
-   echo "This will take a while Please Wait"
-   sudo apt-get install -y libevent-dev
-   sudo apt-get install -y python-picamera
-   sudo apt-get install -y python-configparser
-   sudo apt-get install -y python-gevent
-   sudo apt-get install -y python-requests
-   sudo apt-get install -y python-shapely
-   sudo pip3 install shapely
-   sudo pip install grequests 
-   sudo pip3 install grequests      
-   sudo pip install imutils
-   sudo pip3 install imutils
-   do_anykey
-}
-
 function do_cv3_dep ()
 {
    cd ~/
@@ -109,11 +71,6 @@ function do_cv3_dep ()
    sudo python get-pip.py
    sudo pip install numpy
    do_any_key   
-}
-
-function do_cv3_get ()
-{
-   cd ~/
    echo "Download and unzip opencv 3.0.0"
    echo "-------------------------------"    
    # Install opencv3 download and unzip
@@ -176,30 +133,17 @@ function do_cv3_install ()
 function do_about()
 {
   whiptail --title "About" --msgbox " \
-   Camerafeed project Install Assist
+   sonic-track project Install Assist
       written by Claude Pageau
 
-This Menu will help install Feedcamera github
-project, dependencies and Optionally Opencv 3
-Note Feedcamera Libraries will be installed
-to /usr/local/lib/python3.4/dist-packages
-and /usr/local/lib/python2.7/dist-packages
+This Menu will help install opencv3 if required
 
-You can run Camerafeed from a Desktop Terminal
-or SSH console (cannot view video feed)
-to view opencv window per settings.ini
-This will take input from pi camera or
-a video file depending on settings.ini
-for Live Camera set
-pi : True
-show_window : True
-
-To Run from desktop terminal or console
+To Run sonic-track
 depending on how you have things configured
 Run
 
-cd ~/Camerafeed
-python3 run.py                    
+cd ~/sonic-track
+./sonic-track.sh                    
 
              Good Luck 
 \
@@ -212,13 +156,10 @@ function do_main_menu ()
 {
   SELECTION=$(whiptail --title "sonic-track Install" --menu "Arrow/Enter Selects or Tab Key" 20 70 10 --cancel-button Quit --ok-button Select \
   "a " "Raspbian Jessie Update, Upgrade and rpi-update" \
-  "b " "sonic-track Install Files" \
-  "c " "sonic-track Install Dependencies" \
-  "d " "OpenCV3 Download and Unzip" \
-  "e " "OpenCV3 Install Build Dependencies " \
-  "f " "OpenCV3 Make, Compile and Install" \
-  "g " "Camerafeed Edit settings.ini" \
-  "h " "About" \
+  "b " "OpenCV3 Install Build Dependencies and Download Source" \
+  "c " "OpenCV3 Make, Compile and Install" \
+  "d " "sonic-track Edit config.py Settings" \
+  "e " "About" \
   "q " "Quit Menu Back to Console"  3>&1 1>&2 2>&3)
 
   RET=$?
@@ -227,13 +168,10 @@ function do_main_menu ()
   elif [ $RET -eq 0 ]; then
     case "$SELECTION" in
       a\ *) do_rpi_update ;;
-      b\ *) do_clone_camerafeed ;;
-      c\ *) do_camerafeed_dep ;;
-      d\ *) do_cv3_get;;
-      e\ *) do_cv3_dep ;;
-      f\ *) do_cv3_install ;; 
-      g\ *) nano ~/sonic-track/config.py ;;
-      h\ *) do_about ;;
+      b\ *) do_cv3_dep ;;
+      c\ *) do_cv3_install ;; 
+      d\ *) nano ~/sonic-track/config.py ;;
+      e\ *) do_about ;;
       q\ *) clear
             exit 0 ;;
          *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
@@ -245,11 +183,10 @@ while true; do
    do_main_menu
 done
 
-echo "Try running Camerafeed App"
-echo "Edit the ~/Camerafeed/settings.ini and set pi=True for pi-camera module"
-echo "Run Pi desktop and open terminal session then"
-echo "cd ~/Camerafeed"
-echo "python3 run.py"
-echo " You should see a 320x200 video feed from the camera"
+echo "To Run sonic-track run the following command"
+echo ""
+echo "cd ~/sonic-track"
+echo "./sonic-track.sh"
+echo ""
 echo "Good Luck ..."
 
