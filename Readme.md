@@ -22,7 +22,7 @@ From logged in RPI SSH session or console terminal perform the following.
     chmod +x setup.sh
     ./setup.sh
 
-### Opencv3 Install
+### Opencv3 Install (if required)
 This program requires opencv3 to be installed on the latest RPI Jessie disto.  I have written a menu driven
 install script if you do not have opencv3 already installed.  
 This is a somewhat automate menu driven install of opencv 3.0.0
