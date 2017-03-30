@@ -17,14 +17,14 @@ This is a whiptail menu system that allows install of opencv3 if required
 
     curl -L https://raw.github.com/pageauc/sonic-track/master/setup.sh | bash
 
-From a computer logged into the RPI via ssh(Putty) session use mouse to highlight command above, right click, copy.  
+From a computer logged into the RPI via ssh (Putty) session use mouse to highlight command above, right click, copy.  
 Then select ssh(Putty) window, mouse right click, paste.  The command should 
-download and execute the sonic-track github setup.sh script and install the sonic-track.  
+download and execute the sonic-track github setup.sh script and install sonic-track files and set permissions.  
 This install can also be done directly on an Internet connected Raspberry Pi via a console or desktop terminal session and web browser.      
-Note - a raspbian apt-get update and upgrade will be performed as part of install 
-so it may take some time if these are not up-to-date
+***Note*** - A raspbian apt-get update and upgrade will be performed as part of install 
+so it may take some time if these are not up-to-date.
 
-#### or Manual Install   
+#### Manual Install   
 From logged in RPI SSH session or console terminal perform the following.
 
     wget https://raw.github.com/pageauc/sonic-track/master/setup.sh
@@ -32,9 +32,9 @@ From logged in RPI SSH session or console terminal perform the following.
     ./setup.sh
 
 ### Opencv3 Install (if required)
-sonic-track.py requires opencv3 to be installed on the latest RPI Jessie disto.  I have written a menu driven
-install script if you do not have opencv3 already installed.  
-This is a somewhat automate menu driven install of opencv 3.0.0
+sonic-track.py requires opencv3 to be installed on the latest RPI Jessie disto. I have written a menu driven
+install script called cv3-setup-.sh.  Use this if you do not have opencv3 already installed.  
+This menu picks allow installing dependencies, download, cmake, compile and install of opencv 3.0.0.
 I tried opencv 3.2.0 but had errors so it is best to stick with 3.0.0 per this script.
 To Run the whiptail menu setup script.  From a logged in ssh or terminal session run
 
