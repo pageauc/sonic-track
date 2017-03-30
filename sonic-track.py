@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 progname = "sonic_track.py"
-ver = "ver 0.20"
+ver = "ver 0.30"
 
 print("%s %s using sonic-pi, pi-camera, python3 and OpenCV" % (progname, ver))
 print("Loading Please Wait ....")
@@ -46,11 +46,7 @@ from threading import Thread
 from psonic import *
 
 # Setup global variables for notes
-notes_total = len(notes_midi)
-x_zone = int(CAMERA_WIDTH / (notes_total-1))
-y_zone = int(CAMERA_HEIGHT /(notes_total-1))
-
-print("total_notes=%i x_zone=%i y_zone=%i" % ( notes_total, x_zone, y_zone))
+# Change this into a function to allow variable notes in octave range
 
 #-----------------------------------------------------------------------------------------------  
 class PiVideoStream:
@@ -103,14 +99,60 @@ class PiVideoStream:
         self.stopped = True
 
 #-----------------------------------------------------------------------------------------------  
+def get_octave ( x, y, w, h ):
+    area = w * h
+    
+    if octave_area_on:
+        if area > 9000:
+            notes_octave = octave_2
+            octave = 2
+        elif area > 8000:
+            notes_octave = octave_3           
+            octave = 3
+        elif area > 2000:
+            notes_octave = octave_4    
+            octave = 4
+        elif area > 1000:
+            notes_octave = octave_5    
+            octave = 5
+        elif area > 500:
+            notes_octave = octave_6    
+            octave = 6
+        elif area > 200:
+            notes_octave = octave_7 
+            octave = 7
+        elif area > 100:
+            notes_octave = octave_8
+            octave = 8
+        else:
+            notes_octave = octave_9
+            octave = 9
+    else:
+        notes_octave = default_octave
+        octave = default_octave_number
+    
+    # split screen into horz and vert note zones    
+    notes_total = len(notes_octave)
+    horiz_zone = int(CAMERA_WIDTH / (notes_total-1))
+    vert_zone = int(CAMERA_HEIGHT /(notes_total-1))
+    x_idx = int( x / horiz_zone )
+    y_idx = int( y / vert_zone )
+    
+    note1 = notes_octave[x_idx]
+    note2 = notes_octave[y_idx]
+
+    print("Octave=%i note1=%i note2=%i xy(%i,%i) xy(idx=%i,%i) area(%i*%i)=%i" %( octave, note1, note2, x, y, x_idx, y_idx, w, h, area ))
+    
+    return note1, note2   
+    
+#-----------------------------------------------------------------------------------------------  
 def play_notes(x, y, w, h):
+
    use_synth(BEEP)
-  # use_synth(PROPHET)
-   x_idx = int( x / x_zone )
-   y_idx = int( y / y_zone )
-   note1 = notes_midi[x_idx]
-   note2 = notes_midi[y_idx] 
-   print("xy(%i,%i) xy(idx=%i,%i) note1=%i note2=%i" %( x, y, x_idx, y_idx, note1, note2 ))
+   # use_synth(PROPHET)
+
+   note1, note2 = get_octave(x, y, w, h)
+  
    play([note1, note2])
    sleep(notes_delay)
 
@@ -127,7 +169,11 @@ def sonic_track():
     if window_on:
         print("press q to quit opencv display")
     else:
-        print("press ctrl-c to quit")        
+        print("press ctrl-c to quit")
+    if octave_area_on:
+        print("octave_area_on=True  Octave changes by area")
+    else:
+        print("octave_area_on=False Octave default is 5")    
     print("Start Motion Tracking ....")
     cx = 0
     cy = 0

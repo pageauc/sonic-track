@@ -1,4 +1,5 @@
 # Config.py file for motion-track.py
+# requires sonic_track 0.3 or greater 
 
 # Display Settings
 debug = True        # Set to False for no data display
@@ -28,5 +29,20 @@ THRESHOLD_SENSITIVITY = 25
 BLUR_SIZE = 10
 
 # python-sonic midi notes settings.
-notes_midi = [59,60,62,64,65,67,69,71,72]  # available notes to play
-notes_delay = 0.5  # Delay between notes played
+notes_delay = 0.5        # seconds delay between notes played 
+octave_area_on = True    # True = area changes octave  False = octave_default
+
+octave_0 = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] 
+octave_1 = [ 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ] 
+octave_2 = [ 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 ] 
+octave_3 = [ 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47 ] 
+octave_4 = [ 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59 ] 
+octave_5 = [ 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71 ] 
+octave_6 = [ 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83 ] 
+octave_7 = [ 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95 ] 
+octave_8 = [ 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107 ] 
+octave_9 = [ 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119 ]
+octave_10 = [ 120, 121, 122, 123, 124, 125, 126, 127 ]
+
+default_octave = octave_5   # set default value for octave if not controlled by area
+default_octave_number = 5   # set default octave number per above setting
