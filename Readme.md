@@ -58,16 +58,24 @@ With this variable setting you will need to run from the RPI GUI desktop per pre
 run commands above.  This 
 This will display the opencv tracking window on GUI desktop. 
 
-### sonic-track.py - Basic concept of tracking moving objects
-This Demo program detects motion in the field of view using opencv3 commands and returns movement 
-contours above a minimum size and returns the x,y,h,w of the movement contours. These values are then
-sent to sonic-pi via psonic.py and pythonosc.  sonic-track.sh can run in a SSH terminal 
-session only. The sonic-pi gui will be launched via xauth display commands.  Make sure the 
-Raspberry Pi Jessie OS pixel GUI desktop is running.  This demo needs to run on
-a quad core raspberry pi with the latest Jessie build installed.
+### Change Settings
+
+Edit the config.py file and set variables as per comments
+
+    cd ~./sonic-track
+    nano config.py
  
-* Motion Track Demo YouTube Video http://youtu.be/09JS7twPBsQ  
-* GitHub Repo https://github.com/pageauc/sonic-track
+The play_notes function uses the motion contour center and width and height eg x, y, h, w motion variables.
+These values are used to generate notes and/or change octave based on contour area.  Sound values are send
+to sonic-pi interface.  Sounds can be changed using synth settings per the psonic.py python library        
+        
+For more information about psonic see https://github.com/gkvoelkl/python-sonic  
+
+To change how the notes algorithm works you would need to change sonic-track.py programing.  This will
+require reprogramming how notes are generated via x,y,w,h values.  
+
+    cd ~./sonic-track
+    nano sonic-track.py    
 
 ### Introduction
 I did quite a bit of searching on the internet, github, etc, but could not
@@ -95,29 +103,26 @@ these are also available from other vendors.  Just google 3.5mm audio/video jack
 https://www.amazon.com/P316-06N-6-Inch-Stereo-Splitter-Adapter/dp/B00M5FKF9E/ref=sr_1_1?ie=UTF8&qid=1490056641&sr=8-1&keywords=35+mm+rca+audio+cable
 depending on the powered speaker audio IN connection requirements.
 
-### Change Settings
+### sonic-track.py - Basic concept of tracking moving objects
+This Demo program detects motion in the field of view using opencv3 commands and returns movement 
+contours above a minimum size and returns the x,y,h,w of the movement contours. These values are then
+sent to sonic-pi via psonic.py and pythonosc.  sonic-track.sh can run in a SSH terminal 
+session only. The sonic-pi gui will be launched via xauth display commands.  Make sure the 
+Raspberry Pi Jessie OS pixel GUI desktop is running.  This demo needs to run on
+a quad core raspberry pi with the latest Jessie build installed.
+ 
+* Motion Track Demo YouTube Video http://youtu.be/09JS7twPBsQ  
+* GitHub Repo https://github.com/pageauc/sonic-track
 
-Edit the config.py file and set variables as per comments
+### Enhancements List
 
-    cd ~./sonic-track
-    nano config.py
-    
-or run settings menu pick from setup.sh
+* Save motion notes to a csv file
+* Read csv file and replay previous notes or read from a another data file
+* Read from a video file and generate notes based on motion tracking
+* Create alternate configuration settings via separate config.py files.  This would allow
+changing how notes are generated.
+* Setup a method to easily change synth settings
 
-    cd ~./sonic-track
-    ./setup.sh
-        
-This interface runs under python sonic psonic.py.  For more information about this
-see https://github.com/gkvoelkl/python-sonic  
-
-To change the notes algorithm Edit sonic-track.py
-
-    cd ~./sonic-track
-    nano sonic-track.py    
-
-Edit the play_notes function to change how the x, y, h, w motion variables interface with the sonic-pi sound generation      
-per the psonic.py python library        
-        
 ### Credits  
 Some of this code is based on a YouTube tutorial by
 Kyle Hounslow using C here https://www.youtube.com/watch?v=X6rPdRZzgjg
