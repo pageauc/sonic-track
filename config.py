@@ -55,8 +55,8 @@ octave_10 = [ 120, 121, 122, 123, 124, 125, 126, 127 ]
 default_octave = octave_5   # set default value for octave if not controlled by area
 default_octave_number = 5   # set default octave number per above setting
 
-# Areas of contours GT that trigger each octave range
-# ---------------------------------------------------
+# contour area greater than to trigger each octave range
+# ------------------------------------------------------
 octave_0_trig = 9000    # sq_px contour greater than area to trigger this octave
 octave_1_trig = 8000    # sq_px contour greater than area to trigger this octave
 octave_2_trig = 6000    # sq_px contour greater than area to trigger this octave
