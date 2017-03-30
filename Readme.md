@@ -2,6 +2,13 @@
 ### Track x,y moving object positions and generate sounds via sonic-pi.  
 ### Uses pi-camera, python3, Opencv3, python-sonic, pythonosc and sonic-pi 
 
+### Introduction
+This demo app sends movement data to sonic-pi via psonic.py and pythonosc.
+You will need a pi camera and a powered speaker
+connected to the Raspberry Pi audio/video plug via appropriate cables.
+I thought it would be interesting to point the camera at a fish tank or other source of
+video movement to see what sounds are generated.  This is just a very basic
+setup but more elaborate sonic-pi sound generation algorithms are possible. 
 
 ### How to Install
 
@@ -91,14 +98,6 @@ require reprogramming how notes are generated via x,y,w,h values.
 
     cd ~./sonic-track
     nano sonic-track.py    
-
-### Introduction
-This demo app sends movement data to sonic-pi via psonic.py and pythonosc.
-You will need a pi camera and a powered speaker
-connected to the Raspberry Pi audio/video plug via appropriate cables.
-I thought it would be interesting to point the camera at a fish tank or other source of
-video movement to see what sounds are generated.  This is just a very basic
-setup but more elaborate sonic-pi sound generation algorithms are possible. 
 
 ### Prerequisites
 * Requires a quad core Raspberry Pi computer running with an up-to-date raspbian Jessie distro
