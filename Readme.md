@@ -89,7 +89,7 @@ The play_notes function uses the motion contour center and width and height eg x
 These values are used to generate notes and/or change octave based on contour area.  Sound values are send
 to sonic-pi interface.  Sounds can be changed using synth settings per the psonic.py python library        
         
-For more information about psonic see https://github.com/gkvoelkl/python-sonic 
+For more information about psonic see https://github.com/gkvoelkl/python-sonic    
 and midi values see  http://www.electronics.dit.ie/staff/tscarff/Music_technology/midi/midi_note_numbers_for_octaves.htm
 
 To change how the notes algorithm works you would need to change sonic-track.py programing.  This will
