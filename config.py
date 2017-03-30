@@ -1,5 +1,5 @@
 # Config.py file for motion-track.py
-# requires sonic_track 0.3 or greater 
+# requires sonic_track 0.4 or greater 
 
 # Display Settings
 debug = True        # Set to False for no data display
@@ -30,7 +30,7 @@ BLUR_SIZE = 10
 
 # python-sonic midi notes settings.
 notes_delay = 0.5        # seconds delay between notes played 
-octave_area_on = True    # True = area changes octave  False = octave_default
+octave_area_on = True    # True = area changes octave  False = default_octave
 
 octave_0 = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] 
 octave_1 = [ 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ] 
@@ -46,3 +46,15 @@ octave_10 = [ 120, 121, 122, 123, 124, 125, 126, 127 ]
 
 default_octave = octave_5   # set default value for octave if not controlled by area
 default_octave_number = 5   # set default octave number per above setting
+
+octave_0_trig = 9000    # sq_px contour greater than area to trigger this octave
+octave_1_trig = 8000    # sq_px contour greater than area to trigger this octave
+octave_2_trig = 6000    # sq_px contour greater than area to trigger this octave
+octave_3_trig = 4000    # sq_px contour greater than area to trigger this octave
+octave_4_trig = 2000    # sq_px contour greater than area to trigger this octave
+octave_5_trig = 1000    # sq_px contour greater than area to trigger this octave
+octave_6_trig = 500     # sq_px contour greater than area to trigger this octave
+octave_7_trig = 200     # sq_px contour greater than area to trigger this octave
+octave_8_trig = 100     # sq_px contour greater than area to trigger this octave
+octave_9_trig = 50      # sq_px contour greater than area to trigger this octave
+octave_10_trig = 40     # sq_px contour greater than area to trigger this octave

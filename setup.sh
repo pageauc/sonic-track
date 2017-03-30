@@ -1,6 +1,6 @@
 #!/bin/bash
 # Convenient sonic-track-install.sh script written by Claude Pageau 1-Jul-2016
-ver="0.30"
+ver="0.40"
 DEST_DIR='sonic-track'  # Default folder install location
 
 cd ~
