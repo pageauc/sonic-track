@@ -34,15 +34,14 @@ From logged in RPI SSH session or console terminal perform the following.
 ### Opencv3 Install (if required)
 sonic-track.py requires opencv3 to be installed on the latest RPI Jessie disto. I have written a menu driven
 install script called cv3-setup-.sh.  Use this if you do not have opencv3 already installed.  
-This menu picks allow installing dependencies, download, cmake, compile and install of opencv 3.0.0.
+cv3-setup.sh menu picks allow updating, installing dependencies, downloads, cmake, compile and make install of opencv 3.0.0.
 I tried opencv 3.2.0 but had errors so it is best to stick with 3.0.0 per this script.
 To Run the whiptail menu setup script.  From a logged in ssh or terminal session run
 
     cd ~/sonic-track
     ./cv3-setup.sh    
  
-You will be asked to reboot at certain steps.  The script will install Raspberry Pi update, upgrade, rpi-update,
-install/update opencv3 dependencies, get opencv3 source, perform opencv3 cmake, compile and install
+You will be asked to reboot at certain steps.  
 
 More information is available here http://www.pyimagesearch.com/2015/10/26/how-to-install-opencv-3-on-raspbian-jessie/ 
     
