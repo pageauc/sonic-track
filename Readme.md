@@ -2,7 +2,10 @@
 ### Track x,y moving object positions and generate sounds via sonic-pi.  
 ### Uses pi-camera, python3, Opencv3, python-sonic, pythonosc and sonic-pi 
 
-### Quick Install   
+
+### How to Install
+
+#### Quick Install   
 Easy Install of sonic-track onto a Raspberry Pi Computer with latest Raspbian.
 This is a whiptail menu system that allows install of opencv3 if required 
 
@@ -39,8 +42,9 @@ More information is available here http://www.pyimagesearch.com/2015/10/26/how-t
     
 ### How to Run
 Default is SSH or Terminal console only display. Use Nano to Edit config.py variables and available
-notes_midi and notes_delay. See other variables and comments for additional variable customization settings.  
-From SSH session, console or GUI desktop terminal session execute the following commands 
+notes_midi, octave triggers and/or notes_delay. See other variables and comments for additional variable customization settings.  
+From SSH session, console or GUI desktop terminal session execute the following commands.
+Make sure a speaker is connected to the pi before starting.
 
     cd ~/sonic-track
     ./sonic-track.sh   
@@ -50,14 +54,25 @@ To display opencv window on Raspberry Pi desktop set config.py variable below.
     cd ~/sonic-track
     nano config.py
     
-in nano set the following variable then ctrl-x y to save change(s)
+#### GUI RPI Desktop display video
+With a display, keyboard and mouse attached to the RPI, Login to the Pixel Desktop
 
+Use desktop menu to open a termina session.  The use nano to set the following
+config.py variable then ctrl-x y to save change(s)
+
+    cd ~/sonic-track
+    nano config.py
+    
+edit the following setting the ctrl-x y to save
+    
     window_on = True
 
-With this variable setting you will need to run from the RPI GUI desktop per previous
-run commands above.  This 
-This will display the opencv tracking window on GUI desktop. 
+You can either start sonic-pi from the desktop the in the terminal window start sonic-track.py
 
+or from the desktop terminal session run
+
+    ./sonic-track.sh
+    
 ### Change Settings
 
 Edit the config.py file and set variables as per comments
@@ -78,23 +93,21 @@ require reprogramming how notes are generated via x,y,w,h values.
     nano sonic-track.py    
 
 ### Introduction
-I did quite a bit of searching on the internet, github, etc, but could not
-at the time find a similar python picamera implementation that returns x,y coordinates of
-the moving objects in the frame although some came close.  This demo app sends 
-movement data to sonic-pi via psonic.py and pythonosc.  You will need a pi camera and a powered speaker
+This demo app sends movement data to sonic-pi via psonic.py and pythonosc.
+You will need a pi camera and a powered speaker
 connected to the Raspberry Pi audio/video plug via appropriate cables.
 I thought it would be interesting to point the camera at a fish tank or other source of
-random movement to see what sounds are generated.  This is just a very basic
+video movement to see what sounds are generated.  This is just a very basic
 setup but more elaborate sonic-pi sound generation algorithms are possible. 
 
 ### Prerequisites
-
 * Requires a quad core Raspberry Pi computer running with an up-to-date raspbian Jessie distro
 * RPI camera module installed and configured. 
 * Dependencies will be installed via setup.sh depending on your previous installs.  
 * opencv3 is required and can be installed via setup.sh menu picks (if required)
 * sonic-pi is installed as part of the Jessie full install distro (not Lite)
 * Powered speaker including cables between RPI 3.5 mm audio/video plug and speaker
+
 You will also need a speaker plugged into the 3.5mm audio/video jack
 similar to these cables https://www.adafruit.com/product/2881 
 or https://www.amazon.com/Parts-Express-3-5mm-Plug-Cable/dp/B0007V6JCK  
@@ -117,8 +130,9 @@ a quad core raspberry pi with the latest Jessie build installed.
 ### Enhancements List
 
 * Save motion notes to a csv file
-* Read csv file and replay previous notes or read from a another data file
 * Read from a video file and generate notes based on motion tracking
+* Read csv file and replay previous notes or read from another data file and convert to
+note ranges required for input
 * Create alternate configuration settings via separate config.py files.  This would allow
 changing how notes are generated.
 * Setup a method to easily change synth settings
