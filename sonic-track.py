@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 progname = "sonic_track.py"
-ver = "ver 0.40"
+ver = "ver 0.50"
 
 print("%s %s using sonic-pi, pi-camera, python3 and OpenCV" % (progname, ver))
 print("Loading Please Wait ....")
@@ -136,6 +136,9 @@ def get_octave ( x, y, w, h ):
         elif area > octave_10_trig:
             notes_octave = octave_10
             octave = 10
+        else:
+            notes_octave = default_octave
+            octave = default_octave_number
     else:
         notes_octave = default_octave
         octave = default_octave_number
