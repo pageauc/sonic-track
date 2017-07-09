@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-progVer = "ver 0.61"
+progVer = "ver 0.62"
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
@@ -169,7 +169,6 @@ def trackPoint(grayimage1, grayimage2):
 #-----------------------------------------------------------------------------------------------
 def get_octave ( x, y, w, h ):
     area = w * h
-
     if octave_area_on:
         if area > octave_0_trig:
             notes_octave = octave_0
@@ -294,6 +293,7 @@ def sonic_track():
                 vs.stop()
                 print("End Motion Tracking")
                 still_scanning = False
+                quit()
 
 #-----------------------------------------------------------------------------------------------
 if __name__ == '__main__':

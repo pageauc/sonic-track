@@ -1,6 +1,8 @@
-# Raspberry Pi Sonic-pi Motion Track Demo
+# Raspberry Pi sonic-track.py a Sonic-pi Motion Track Demo
 #### Tracks camera motion contours x,y,w,h values and generates sounds via sonic-pi.  
-#### Uses pi-camera, python3, Opencv3, python-sonic, pythonosc, sonic-pi, powered speaker 
+#### Uses pi-camera or webcam, python3, Opencv3, python-sonic, pythonosc, sonic-pi, powered speaker 
+
+#### YouTube Video https://youtu.be/RCIUlv431E0
 
 ### Introduction
 This demo app sends camera movement tracking data to sonic-pi via psonic.py and pythonosc.

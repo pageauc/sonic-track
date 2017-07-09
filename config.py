@@ -43,13 +43,13 @@ octave_10 = [ 120, 121, 122, 123, 124, 125, 126, 127 ]
 # --------------------------------
 notes_double = False     # Play two notes rather than one per contour
 notes_delay = 0.1        # seconds delay between notes played
-notes_vary_delay = True  # experimental - seconds notes delay base on screen y position
+notes_vary_delay = False # experimental - seconds notes delay based on screen y position
 octave_area_on = False   # default= False  True = contour area changes octave (too slow)
 
 # Default octave if octave_area_on = False
 # ----------------------------------------
-default_octave = octave_6   # set default value for octave if not controlled by area
-default_octave_number = 6   # set default octave number per above setting
+default_octave = octave_5   # set default value for octave if not controlled by area
+default_octave_number = 5   # set default octave number per above setting
 
 # contour area greater than to trigger each octave range (not working well)
 # ------------------------------------------------------
@@ -70,10 +70,10 @@ octave_10_trig = 40     # sq_px contour greater than area to trigger this octave
 MIN_AREA = 100     # excludes all contours less than or equal to this Area
 diff_window_on = False  # Show OpenCV image difference window
 thresh_window_on = False  # Show OpenCV image Threshold window
-SHOW_CIRCLE = True  # show a circle otherwise show bounding rectancle on window
-CIRCLE_SIZE = 8     # diameter of circle to show motion location in window
+SHOW_CIRCLE = False # show a circle otherwise show bounding rectancle on window
+CIRCLE_SIZE = 5     # diameter of circle to show motion location in window
 LINE_THICKNESS = 1  # thickness of bounding line in pixels
-WINDOW_BIGGER = 2.5 # Resize multiplier for Movement Status Window
+WINDOW_BIGGER = 2   # Resize multiplier for Movement Status Window
                     # if gui_window_on=True then makes opencv window bigger
                     # Note if the window is larger than 1 then a reduced frame rate will occur
 
