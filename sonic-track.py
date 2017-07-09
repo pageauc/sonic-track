@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 
-progname = "sonic_track.py"
-ver = "ver 0.50"
-
-print("%s %s using sonic-pi, pi-camera, python3 and OpenCV" % (progname, ver))
-print("Loading Please Wait ....")
-
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
 baseDir=mypath[0:mypath.rfind("/")+1]  # get the path location only (excluding script name)
 baseFileName=mypath[mypath.rfind("/")+1:mypath.rfind(".")]
 progName = os.path.basename(__file__)
+progVer = "ver 0.60"
+
+print("%s %s using sonic-pi, pi-camera, python3 and OpenCV" % (progName, progVer))
+print("Loading Please Wait ....")
 
 # Check for variable file to import and error out if not found.
 configFilePath = baseDir + "config.py"
@@ -31,7 +29,7 @@ if not os.path.exists(configFilePath):
         quit()
     f = open('config.py','wb')
     f.write(wgetfile.read())
-    f.close()   
+    f.close()
 # Read Configuration variables from config.py file
 from config import *
 
@@ -48,7 +46,14 @@ from psonic import *
 # Setup global variables for notes
 # Change this into a function to allow variable notes in octave range
 
-#-----------------------------------------------------------------------------------------------  
+if WEBCAM:
+    big_w = int(WEBCAM_WIDTH * WINDOW_BIGGER)
+    big_h = int(WEBCAM_HEIGHT * WINDOW_BIGGER)
+else:
+    big_w = int(CAMERA_WIDTH * WINDOW_BIGGER)
+    big_h = int(CAMERA_HEIGHT * WINDOW_BIGGER)
+
+#-----------------------------------------------------------------------------------------------
 class PiVideoStream:
     def __init__(self, resolution=(CAMERA_WIDTH, CAMERA_HEIGHT), framerate=CAMERA_FRAMERATE, rotation=0, hflip=False, vflip=False):
         # initialize the camera and stream
@@ -98,34 +103,101 @@ class PiVideoStream:
         # indicate that the thread should be stopped
         self.stopped = True
 
-#-----------------------------------------------------------------------------------------------  
+#-----------------------------------------------------------------------------------------------
+class WebcamVideoStream:
+    def __init__(self, CAM_SRC=WEBCAM_SRC, CAM_WIDTH=WEBCAM_WIDTH, CAM_HEIGHT=WEBCAM_HEIGHT):
+        # initialize the video camera stream and read the first frame
+        # from the stream
+        self.stream = CAM_SRC
+        self.stream = cv2.VideoCapture(CAM_SRC)
+        self.stream.set(3,CAM_WIDTH)
+        self.stream.set(4,CAM_HEIGHT)
+        (self.grabbed, self.frame) = self.stream.read()
+
+        # initialize the variable used to indicate if the thread should
+        # be stopped
+        self.stopped = False
+
+    def start(self):
+        # start the thread to read frames from the video stream
+        t = Thread(target=self.update, args=())
+        t.daemon = True
+        t.start()
+        return self
+
+    def update(self):
+        # keep looping infinitely until the thread is stopped
+        while True:
+            # if the thread indicator variable is set, stop the thread
+            if self.stopped:
+                    return
+
+            # otherwise, read the next frame from the stream
+            (self.grabbed, self.frame) = self.stream.read()
+
+    def read(self):
+        # return the frame most recently read
+        return self.frame
+
+    def stop(self):
+        # indicate that the thread should be stopped
+        self.stopped = True
+
+#-----------------------------------------------------------------------------------------------
+def trackPoint(grayimage1, grayimage2):
+    moveData = []   # initialize list of movementCenterPoints
+    biggestArea = MIN_AREA
+    # Get differences between the two greyed images
+    differenceimage = cv2.absdiff( grayimage1, grayimage2 )
+    # Blur difference image to enhance motion vectors
+    differenceimage = cv2.blur( differenceimage,(BLUR_SIZE,BLUR_SIZE ))
+    # Get threshold of blurred difference image based on THRESHOLD_SENSITIVITY variable
+    retval, thresholdimage = cv2.threshold( differenceimage, THRESHOLD_SENSITIVITY, 255, cv2.THRESH_BINARY )
+    try:
+        thresholdimage, contours, hierarchy = cv2.findContours( thresholdimage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE )
+    except:
+        contours, hierarchy = cv2.findContours( thresholdimage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE )
+
+    if contours != ():
+        movement = False
+        for c in contours:
+            cArea = cv2.contourArea(c)
+            if cArea > biggestArea:
+                biggestArea = cArea
+                ( x, y, w, h ) = cv2.boundingRect(c)
+                cx = int(x + w/2)   # x center point of contour
+                cy = int(y + h/2)   # y center point of contour
+                moveData = [cx, cy, w, h]
+    return moveData
+        
+#-----------------------------------------------------------------------------------------------
 def get_octave ( x, y, w, h ):
     area = w * h
-    
+
     if octave_area_on:
         if area > octave_0_trig:
             notes_octave = octave_0
-            octave = 0        
+            octave = 0
         if area > octave_1_trig:
             notes_octave = octave_1
-            octave = 1        
+            octave = 1
         if area > octave_2_trig:
             notes_octave = octave_2
             octave = 2
         elif area > octave_3_trig:
-            notes_octave = octave_3           
+            notes_octave = octave_3
             octave = 3
         elif area > octave_4_trig:
-            notes_octave = octave_4    
+            notes_octave = octave_4
             octave = 4
         elif area > octave_5_trig:
-            notes_octave = octave_5    
+            notes_octave = octave_5
             octave = 5
         elif area > octave_6_trig:
-            notes_octave = octave_6    
+            notes_octave = octave_6
             octave = 6
         elif area > octave_7_trig:
-            notes_octave = octave_7 
+            notes_octave = octave_7
             octave = 7
         elif area > octave_8_trig:
             notes_octave = octave_8
@@ -142,42 +214,34 @@ def get_octave ( x, y, w, h ):
     else:
         notes_octave = default_octave
         octave = default_octave_number
-    
-    # split screen into horz and vert note zones    
+
+    # split screen into horz and vert note zones
     notes_total = len(notes_octave)
     horiz_zone = int(CAMERA_WIDTH / (notes_total-1))
     vert_zone = int(CAMERA_HEIGHT /(notes_total-1))
     x_idx = int( x / horiz_zone )
     y_idx = int( y / vert_zone )
-    
+
     note1 = notes_octave[x_idx]
     note2 = notes_octave[y_idx]
 
     print("Octave=%i note1=%i note2=%i xy(%i,%i) xy(idx=%i,%i) area(%i*%i)=%i" %( octave, note1, note2, x, y, x_idx, y_idx, w, h, area ))
-    
-    return note1, note2   
-    
-#-----------------------------------------------------------------------------------------------  
+
+    return note1, note2
+
+#-----------------------------------------------------------------------------------------------
 def play_notes(x, y, w, h):
 
    use_synth(BEEP)
    # use_synth(PROPHET)
 
    note1, note2 = get_octave(x, y, w, h)
-  
+
    play([note1, note2])
    sleep(notes_delay)
 
-#-----------------------------------------------------------------------------------------------  
+#-----------------------------------------------------------------------------------------------
 def sonic_track():
-    print("Initializing Camera ....")
-    # Save images to an in-program stream
-    # Setup video stream on a processor Thread for faster speed
-    vs = PiVideoStream().start()
-    vs.camera.rotation = CAMERA_ROTATION
-    vs.camera.hflip = CAMERA_HFLIP
-    vs.camera.vflip = CAMERA_VFLIP
-    time.sleep(2.0)    
     if window_on:
         print("press q to quit opencv display")
     else:
@@ -185,73 +249,44 @@ def sonic_track():
     if octave_area_on:
         print("octave_area_on=True  Octave changes by area")
     else:
-        print("octave_area_on=False Octave default is 5")    
+        print("octave_area_on=False Octave default is 5")
     print("Start Motion Tracking ....")
-    cx = 0
-    cy = 0
-    cw = 0
-    ch = 0
+    cx, cy, cw, ch = 0,0,0,0
     frame_count = 0
     start_time = time.time()
     # initialize image1 using image2 (only done first time)
-    image2 = vs.read()     
+    image2 = vs.read()
     image1 = image2
     grayimage1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-    first_image = False    
     still_scanning = True
     while still_scanning:
-        image2 = vs.read()        
-        # initialize variables         
-        motion_found = False
-        biggest_area = MIN_AREA
-        # At this point the image is available as stream.array
-        # Convert to gray scale, which is easier
+        image2 = vs.read()
         grayimage2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
-        # Get differences between the two greyed, blurred images
-        differenceimage = cv2.absdiff(grayimage1, grayimage2)
-        differenceimage = cv2.blur(differenceimage,(BLUR_SIZE,BLUR_SIZE))
-        # Get threshold of difference image based on THRESHOLD_SENSITIVITY variable
-        retval, thresholdimage = cv2.threshold( differenceimage, THRESHOLD_SENSITIVITY, 255, cv2.THRESH_BINARY )         
-        try:
-            thresholdimage, contours, hierarchy = cv2.findContours( thresholdimage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE )        
-        except:       
-            contours, hierarchy = cv2.findContours( thresholdimage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE )         
-        # Get total number of contours
-        total_contours = len(contours)
-        # save grayimage2 to grayimage1 ready for next image2
-        grayimage1 = grayimage2
-        # find contour with biggest area
-        for c in contours:
-            # get area of next contour
-            found_area = cv2.contourArea(c)
-            # find the middle of largest bounding rectangle
-            if found_area > MIN_AREA:
-                (x, y, w, h) = cv2.boundingRect(c)
-                cx = x + w/2
-                cy = y + h/2
-                play_notes(cx, cy, w, h)
-                cw = w
-                ch = h
-                
-        if motion_found:
+        moveData = trackPoint(grayimage1, grayimage2)
+        grayimage1 = grayimage2   
+ 
+        if moveData:
+            cx, cy, cw, ch = moveData[0], moveData[1], moveData[2], moveData[3]        
+            play_notes(cx, cy, cw, ch)
+            if verbose:
+                print("Motion at cx,cy(%i,%i)  Contour:%ix%i=%i sq px" % (cx ,cy, cw, ch, cw*ch))
+            
             if window_on:
                 # show small circle at motion location
                 if SHOW_CIRCLE:
                     cv2.circle(image2,(cx,cy),CIRCLE_SIZE,(0,255,0), LINE_THICKNESS)
                 else:
-                    cv2.rectangle(image2,(cx,cy),(x+cw,y+ch),(0,255,0), LINE_THICKNESS)                  
-            if debug:
-                print("Motion at cx=%3i cy=%3i  total_Contours=%2i  biggest_area:%3ix%3i=%5i" % (cx ,cy, total_contours, cw, ch, biggest_area))
+                    cv2.rectangle(image2,(cx,cy),(int(cx + cw/2),int(cy+ch/2)),(0,255,0), LINE_THICKNESS)
 
         if window_on:
             if diff_window_on:
-                cv2.imshow('Difference Image',differenceimage) 
+                cv2.imshow('Difference Image',differenceimage)
             if thresh_window_on:
                 cv2.imshow('OpenCV Threshold', thresholdimage)
             if WINDOW_BIGGER > 1:  # Note setting a bigger window will slow the FPS
-                image2 = cv2.resize( image2,( big_w, big_h ))                             
+                image2 = cv2.resize( image2,( big_w, big_h ))
             cv2.imshow('Movement Status  (Press q in Window to Quit)', image2)
-            
+
             # Close Window if q pressed while movement status window selected
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 cv2.destroyAllWindows()
@@ -259,16 +294,34 @@ def sonic_track():
                 print("End Motion Tracking")
                 still_scanning = False
 
-#-----------------------------------------------------------------------------------------------    
+#-----------------------------------------------------------------------------------------------
 if __name__ == '__main__':
     try:
-        sonic_track()
-    finally:
+        while True:
+            # Save images to an in-program stream
+            # Setup video stream on a processor Thread for faster speed
+            if WEBCAM:   #  Start Web Cam stream (Note USB webcam must be plugged in)
+                print("Initializing USB Web Camera ....")
+                vs = WebcamVideoStream().start()
+                vs.CAM_SRC = WEBCAM_SRC
+                vs.CAM_WIDTH = WEBCAM_WIDTH
+                vs.CAM_HEIGHT = WEBCAM_HEIGHT
+                time.sleep(4.0)  # Allow WebCam to initialize
+            else:
+                print("Initializing Pi Camera ....")
+                vs = PiVideoStream().start()
+                vs.camera.rotation = CAMERA_ROTATION
+                vs.camera.hflip = CAMERA_HFLIP
+                vs.camera.vflip = CAMERA_VFLIP
+                time.sleep(2.0)  # Allow PiCamera to initialize    
+    
+            sonic_track()
+    except KeyboardInterrupt:
+        vs.stop()
         print("")
         print("+++++++++++++++++++++++++++++++++++")
-        print("%s %s - Exiting" % (progname, ver))
+        print("User Pressed Keyboard ctrl-c")
+        print("%s %s - Exiting" % (progName, progVer))
         print("+++++++++++++++++++++++++++++++++++")
-        print("")                                
-
-
-
+        print("")
+        quit(0)
