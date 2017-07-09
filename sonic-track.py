@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
+progVer = "ver 0.61"
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
 baseDir=mypath[0:mypath.rfind("/")+1]  # get the path location only (excluding script name)
 baseFileName=mypath[mypath.rfind("/")+1:mypath.rfind(".")]
 progName = os.path.basename(__file__)
-progVer = "ver 0.60"
 
 print("%s %s using sonic-pi, pi-camera, python3 and OpenCV" % (progName, progVer))
 print("Loading Please Wait ....")
@@ -32,12 +32,10 @@ if not os.path.exists(configFilePath):
     f.close()
 # Read Configuration variables from config.py file
 from config import *
-
 # import the necessary packages
 import io
 import time
 import cv2
-
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from threading import Thread
@@ -47,11 +45,10 @@ from psonic import *
 # Change this into a function to allow variable notes in octave range
 
 if WEBCAM:
-    big_w = int(WEBCAM_WIDTH * WINDOW_BIGGER)
-    big_h = int(WEBCAM_HEIGHT * WINDOW_BIGGER)
-else:
-    big_w = int(CAMERA_WIDTH * WINDOW_BIGGER)
-    big_h = int(CAMERA_HEIGHT * WINDOW_BIGGER)
+    CAMERA_WIDTH = WEBCAM_WIDTH
+    CAMERA_HEIGHT = WEBCAM_HEIGHT
+big_w = int(CAMERA_WIDTH * WINDOW_BIGGER)
+big_h = int(CAMERA_HEIGHT * WINDOW_BIGGER)
 
 #-----------------------------------------------------------------------------------------------
 class PiVideoStream:
@@ -159,7 +156,6 @@ def trackPoint(grayimage1, grayimage2):
         contours, hierarchy = cv2.findContours( thresholdimage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE )
 
     if contours != ():
-        movement = False
         for c in contours:
             cArea = cv2.contourArea(c)
             if cArea > biggestArea:
@@ -169,7 +165,7 @@ def trackPoint(grayimage1, grayimage2):
                 cy = int(y + h/2)   # y center point of contour
                 moveData = [cx, cy, w, h]
     return moveData
-        
+
 #-----------------------------------------------------------------------------------------------
 def get_octave ( x, y, w, h ):
     area = w * h
@@ -177,19 +173,19 @@ def get_octave ( x, y, w, h ):
     if octave_area_on:
         if area > octave_0_trig:
             notes_octave = octave_0
-            octave = 0
+            octave = 3
         if area > octave_1_trig:
             notes_octave = octave_1
-            octave = 1
+            octave = 3
         if area > octave_2_trig:
             notes_octave = octave_2
-            octave = 2
+            octave = 4
         elif area > octave_3_trig:
             notes_octave = octave_3
-            octave = 3
+            octave = 4
         elif area > octave_4_trig:
             notes_octave = octave_4
-            octave = 4
+            octave = 5
         elif area > octave_5_trig:
             notes_octave = octave_5
             octave = 5
@@ -198,16 +194,16 @@ def get_octave ( x, y, w, h ):
             octave = 6
         elif area > octave_7_trig:
             notes_octave = octave_7
-            octave = 7
+            octave = 6
         elif area > octave_8_trig:
             notes_octave = octave_8
-            octave = 8
+            octave = 7
         elif area > octave_9_trig:
             notes_octave = octave_9
-            octave = 9
+            octave = 7
         elif area > octave_10_trig:
             notes_octave = octave_10
-            octave = 10
+            octave = 7
         else:
             notes_octave = default_octave
             octave = default_octave_number
@@ -224,21 +220,28 @@ def get_octave ( x, y, w, h ):
 
     note1 = notes_octave[x_idx]
     note2 = notes_octave[y_idx]
-
-    print("Octave=%i note1=%i note2=%i xy(%i,%i) xy(idx=%i,%i) area(%i*%i)=%i" %( octave, note1, note2, x, y, x_idx, y_idx, w, h, area ))
-
+    if verbose:
+        print("Octave=%i note1=%i note2=%i xy(%i,%i) xy(idx=%i,%i) area(%i*%i)=%i" %
+                ( octave, note1, note2, x, y, x_idx, y_idx, w, h, area ))
     return note1, note2
 
 #-----------------------------------------------------------------------------------------------
 def play_notes(x, y, w, h):
 
-   use_synth(BEEP)
-   # use_synth(PROPHET)
+   # use_synth(BEEP)
+   use_synth(PROPHET)
 
    note1, note2 = get_octave(x, y, w, h)
 
-   play([note1, note2])
-   sleep(notes_delay)
+   if notes_double:
+       play([note1, note2])
+   else:
+       play(note1)
+
+   if notes_vary_delay:
+       sleep(h/(CAMERA_WIDTH)/.5)
+   else:
+       sleep(notes_delay)
 
 #-----------------------------------------------------------------------------------------------
 def sonic_track():
@@ -263,14 +266,12 @@ def sonic_track():
         image2 = vs.read()
         grayimage2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
         moveData = trackPoint(grayimage1, grayimage2)
-        grayimage1 = grayimage2   
- 
-        if moveData:
-            cx, cy, cw, ch = moveData[0], moveData[1], moveData[2], moveData[3]        
+        grayimage1 = grayimage2
+
+        if moveData:   # Found Movement
+            cx, cy, cw, ch = moveData[0], moveData[1], moveData[2], moveData[3]
             play_notes(cx, cy, cw, ch)
-            if verbose:
-                print("Motion at cx,cy(%i,%i)  Contour:%ix%i=%i sq px" % (cx ,cy, cw, ch, cw*ch))
-            
+
             if window_on:
                 # show small circle at motion location
                 if SHOW_CIRCLE:
@@ -313,8 +314,8 @@ if __name__ == '__main__':
                 vs.camera.rotation = CAMERA_ROTATION
                 vs.camera.hflip = CAMERA_HFLIP
                 vs.camera.vflip = CAMERA_VFLIP
-                time.sleep(2.0)  # Allow PiCamera to initialize    
-    
+                time.sleep(2.0)  # Allow PiCamera to initialize
+
             sonic_track()
     except KeyboardInterrupt:
         vs.stop()
