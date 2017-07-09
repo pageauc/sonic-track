@@ -33,7 +33,7 @@ From logged in RPI SSH session or console terminal perform the following.
 
 ### Opencv3 Install (if required)
 sonic-track.py requires opencv3 to be installed on the latest RPI Jessie disto. I have written a menu driven
-install script called cv3-setup-.sh.  Use this if you do not have opencv3 already installed.  
+install script called cv3-setup.sh.  Use this if you do not have opencv3 already installed.  
 cv3-setup.sh menu picks allow updating, installing dependencies, downloads, cmake, compile and make install of opencv 3.0.0.
 I tried opencv 3.2.0 but had errors so it is best to stick with 3.0.0 per this script.
 To Run the whiptail menu setup script.  From a logged in ssh or terminal session run
@@ -46,8 +46,11 @@ You will be asked to reboot at certain steps.
 More information is available here http://www.pyimagesearch.com/2015/10/26/how-to-install-opencv-3-on-raspbian-jessie/ 
     
 ### How to Run
-Default is SSH or Terminal console only display. Use Nano to Edit config.py variables and available
-notes_midi, octave triggers and/or notes_delay. See other variables and comments for additional variable customization settings.  
+Default is SSH or Terminal console only display. Make sure pixel desktop is enabled and logged in.  This can be done from raspi-config setting.
+This is required for the sonic-track.sh to start sonic-pi on the desktop from an ssh only session.
+
+Use Nano to Edit config.py variables and available.  Select PiCamera or USB web cam depending on your requirements.
+notes_midi, octave triggers and/or notes_delay, Etc. See other variables and comments for additional variable customization settings.  
 From SSH session, console or GUI desktop terminal session execute the following commands.
 Make sure a speaker is connected to the pi before starting.
 
@@ -142,6 +145,9 @@ Kyle Hounslow using C here https://www.youtube.com/watch?v=X6rPdRZzgjg
 Thanks to Adrian Rosebrock jrosebr1 at http://www.pyimagesearch.com 
 for the PiVideoStream Class code available on github at
 https://github.com/jrosebr1/imutils/blob/master/imutils/video/pivideostream.py
+
+
+
 
 ## ---------- Other Raspberry Pi Projects Based on Motion Tracking ------------
 
