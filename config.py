@@ -43,7 +43,7 @@ octave_10 = [ 120, 121, 122, 123, 124, 125, 126, 127 ]
 # --------------------------------
 notes_double = False     # Play two notes rather than one per contour
 notes_delay = 0.1        # seconds delay between notes played
-notes_vary_delay = False # experimental - seconds notes delay based on screen y position
+notes_vary_delay = True  # seconds delay based on screen y position
 octave_area_on = False   # default= False  True = contour area changes octave (too slow)
 
 # Default octave if octave_area_on = False
