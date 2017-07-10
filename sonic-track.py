@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-progVer = "ver 0.62"
+progVer = "ver 0.63"
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
@@ -49,6 +49,9 @@ if WEBCAM:
     CAMERA_HEIGHT = WEBCAM_HEIGHT
 big_w = int(CAMERA_WIDTH * WINDOW_BIGGER)
 big_h = int(CAMERA_HEIGHT * WINDOW_BIGGER)
+
+notes_delay = float(notes_delay)
+
 
 #-----------------------------------------------------------------------------------------------
 class PiVideoStream:
@@ -227,20 +230,49 @@ def get_octave ( x, y, w, h ):
 #-----------------------------------------------------------------------------------------------
 def play_notes(x, y, w, h):
 
+   # Select a use_synth by uncommenting a selection (one only)
+    use_synth(PROPHET)
    # use_synth(BEEP)
-   use_synth(PROPHET)
+   # use_synth(DSAW)
+   # use_synth(PULSE)
+   # use_synth(TB303)
+   # use_synth(DULL_BELL)
+   # use_synth(PRETTY_BELL)
+   # use_synth(SQUARE)
+   # use_synth(PULSE)
+   # use_synth(SUBPULSE)
+   # use_synth(DTRI)
+   # use_synth(DPULSE)
+   # use_synth(FM)
+   # use_synth(MOD_FM)
+   # use_synth(MOD_SAW)
+   # use_synth(MOD_DSAW)
+   # use_synth(MOD_SINE)
+   # use_synth(MOD_TRI)
+   # use_synth(MOD_PULSE)
+   # use_synth(SUPERSAW)
+   # use_synth(HOOVER)
 
-   note1, note2 = get_octave(x, y, w, h)
 
-   if notes_double:
-       play([note1, note2])
-   else:
-       play(note1)
+    note1, note2 = get_octave(x, y, w, h)   # Generated notes based on screen x and y position
 
-   if notes_vary_delay:
-       sleep(h/(CAMERA_WIDTH)/.5)
-   else:
-       sleep(notes_delay)
+    if notes_double:      # Generate two notes rather than one
+        play([note1, note2])
+    else:
+        play(note1)
+
+    if notes_vary_delay:   # Vary the note duration based on screen height
+        notePosDelay = 0.0
+        notePosDelay =  h/float( CAMERA_HEIGHT/0.3 )
+        if (notePosDelay < 0.1):
+            notePosDelay = 0.1
+        elif (notePosDelay > 0.35):
+            notePosDelay = 0.35 
+        if verbose:
+            print("note delay=%.3f seconds" % notePosDelay)
+        sleep(notePosDelay)
+    else:
+        sleep(notes_delay)
 
 #-----------------------------------------------------------------------------------------------
 def sonic_track():
