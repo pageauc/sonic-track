@@ -1,12 +1,13 @@
 # Raspberry Pi sonic-track.py a Sonic-pi Motion Track Demo
 #### Tracks camera motion contours x,y,w,h values and generates sounds via sonic-pi.  
-#### Uses pi-camera or webcam, python3, Opencv3, python-sonic, pythonosc, sonic-pi, powered speaker 
+#### Uses pi-camera or webcam, python3, Opencv3, python-sonic, pythonosc, sonic-pi, powered speaker or HDMI TV
 
 #### YouTube Video https://youtu.be/RCIUlv431E0
 
 ### Introduction
 This demo app sends camera movement tracking data to sonic-pi via psonic.py and pythonosc.
-You will need a pi camera and a powered speaker connected to the Raspberry Pi audio/video plug via appropriate cables.
+You will need a pi camera and a powered speaker connected to the Raspberry Pi audio/video plug via appropriate cables or you can attach RPI
+to an HDMI TV via HDMI cable and sound will redirect to TV speakers.
 I thought it would be interesting to point the camera at a fish tank or other source of
 video movement to see what sounds are generated. You can also stand in front of the camera and generate sounds via body movements.
 This program demo is a very basic setup but more elaborate sonic-pi sound generation algorithms are possible.
@@ -104,14 +105,14 @@ require reprogramming how notes are generated via x,y,w,h values.
     nano sonic-track.py    
 
 ### Prerequisites
-* Requires a quad core Raspberry Pi computer running with an up-to-date raspbian Jessie distro
-* RPI camera module installed and configured. 
+* Recomend a quad core Raspberry Pi computer running with an up-to-date Raspbian Jessie distro
+* RPI camera module or USB Web Cam installed/connected configured and tested to work. 
 * Dependencies will be installed via setup.sh depending on your previous installs.  
-* opencv3 is required and can be installed via setup.sh menu picks (if required)
+* opencv3 is required and can be installed via cv3-setup.sh on menubox.sh menu pick (if required)
 * sonic-pi is installed as part of the Jessie full install distro (not Lite)
-* Powered speaker including cables between RPI 3.5 mm audio/video plug and speaker
+* Optional Powered speaker including cables between RPI 3.5 mm audio/video plug and speaker if not using HDMI TV
 
-You will also need a speaker plugged into the 3.5mm audio/video jack
+You will also need an HDMI TV and Cable to the RPI or a speaker plugged into the 3.5mm audio/video jack 
 similar to these cables https://www.adafruit.com/product/2881 
 or https://www.amazon.com/Parts-Express-3-5mm-Plug-Cable/dp/B0007V6JCK  
 these are also available from other vendors.  Just google 3.5mm audio/video jack
@@ -127,7 +128,8 @@ session only. The sonic-pi gui will be launched via xauth display commands.  Mak
 Raspberry Pi Jessie OS pixel GUI desktop is running.  This demo needs to run on
 a quad core raspberry pi with the latest Jessie build installed.
  
-* Motion Track Demo YouTube Video http://youtu.be/09JS7twPBsQ  
+* Motion Track Demo YouTube Video http://youtu.be/09JS7twPBsQ   
+* YouTube sonic-track demo https://youtu.be/RCIUlv431E0
 * GitHub Repo https://github.com/pageauc/sonic-track
 
 ### Enhancements List
