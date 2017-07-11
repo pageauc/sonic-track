@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-progVer = "ver 0.70"
+progVer = "ver 0.80"
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
@@ -41,16 +41,33 @@ from picamera import PiCamera
 from threading import Thread
 from psonic import *
 
+# Calculated Variables Should not need changing by user
+####
+
 # See if Web Cam is selected
 if WEBCAM:
     CAMERA_WIDTH = WEBCAM_WIDTH
     CAMERA_HEIGHT = WEBCAM_HEIGHT
-big_w = int(CAMERA_WIDTH * WINDOW_BIGGER)
-big_h = int(CAMERA_HEIGHT * WINDOW_BIGGER)
 
-# initialize hotspot area variable
+# Increase size of openCV display window
+big_w = int(CAMERA_WIDTH * windowBigger)
+big_h = int(CAMERA_HEIGHT * windowBigger)
+
+# initialize hotspot area variables
 synthHotxy = (int(CAMERA_WIDTH/synthHotSize),int(CAMERA_HEIGHT/synthHotSize))
-notesSleep = float(notesSleep)
+octaveHotxy = (int(CAMERA_WIDTH/octaveHotSize),int(CAMERA_HEIGHT/octaveHotSize))
+
+# split screen into horz and vert zones for note changes
+octaveStart = octavePicks[0]
+notesTotal = len(octaveList[octaveStart][1])
+notesHorizZone = int(CAMERA_WIDTH / (notesTotal - 1)) # Calculate Zone Area index
+notesVertZone = int(CAMERA_HEIGHT /(notesTotal - 1))
+noteSleepMin = float(noteSleepMin)  # make sure noteSleepMin is a float
+
+# Color data for OpenCV lines and text
+cvBlue = (255,0,0)
+cvGreen = (0,255,0)
+cvRed = (0,0,255)
 
 #-----------------------------------------------------------------------------------------------
 class PiVideoStream:
@@ -147,15 +164,15 @@ def trackPoint(grayimage1, grayimage2):
     moveData = []   # initialize list of movementCenterPoints
     biggestArea = MIN_AREA
     # Get differences between the two greyed images
-    differenceimage = cv2.absdiff( grayimage1, grayimage2 )
+    differenceImage = cv2.absdiff( grayimage1, grayimage2 )
     # Blur difference image to enhance motion vectors
-    differenceimage = cv2.blur( differenceimage,(BLUR_SIZE,BLUR_SIZE ))
+    differenceImage = cv2.blur( differenceImage,(BLUR_SIZE,BLUR_SIZE ))
     # Get threshold of blurred difference image based on THRESHOLD_SENSITIVITY variable
-    retval, thresholdimage = cv2.threshold( differenceimage, THRESHOLD_SENSITIVITY, 255, cv2.THRESH_BINARY )
+    retval, thresholdImage = cv2.threshold( differenceImage, THRESHOLD_SENSITIVITY, 255, cv2.THRESH_BINARY )
     try:
-        thresholdimage, contours, hierarchy = cv2.findContours( thresholdimage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE )
+        thresholdImage, contours, hierarchy = cv2.findContours( thresholdImage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE )
     except:
-        contours, hierarchy = cv2.findContours( thresholdimage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE )
+        contours, hierarchy = cv2.findContours( thresholdImage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE )
 
     if contours != ():
         for c in contours:
@@ -169,119 +186,70 @@ def trackPoint(grayimage1, grayimage2):
     return moveData
 
 #-----------------------------------------------------------------------------------------------
-def get_octave ( x, y, w, h ):  
-# Needs more work to improve since not working well
-# Will look at a pick list similar to synthPick
-                              
-    area = w * h
-    if octave_area_on:
-        if area > octave_0_trig:
-            notes_octave = octave_0
-            octave = 3
-        if area > octave_1_trig:
-            notes_octave = octave_1
-            octave = 3
-        if area > octave_2_trig:
-            notes_octave = octave_2
-            octave = 4
-        elif area > octave_3_trig:
-            notes_octave = octave_3
-            octave = 4
-        elif area > octave_4_trig:
-            notes_octave = octave_4
-            octave = 5
-        elif area > octave_5_trig:
-            notes_octave = octave_5
-            octave = 5
-        elif area > octave_6_trig:
-            notes_octave = octave_6
-            octave = 6
-        elif area > octave_7_trig:
-            notes_octave = octave_7
-            octave = 6
-        elif area > octave_8_trig:
-            notes_octave = octave_8
-            octave = 7
-        elif area > octave_9_trig:
-            notes_octave = octave_9
-            octave = 7
-        elif area > octave_10_trig:
-            notes_octave = octave_10
-            octave = 7
-        else:
-            notes_octave = default_octave
-            octave = default_octave_number
-    else:
-        notes_octave = default_octave
-        octave = default_octave_number
+def playNotes( synthNow, octaveNow, moveData ):
+    x, y, w, h = moveData[0], moveData[1], moveData[2], moveData[3]
+    xZone = int( x / notesHorizZone)
+    yZone = int( y / notesVertZone )
 
-    # split screen into horz and vert note zones
-    notes_total = len(notes_octave)
-    horiz_zone = int(CAMERA_WIDTH / (notes_total-1))
-    vert_zone = int(CAMERA_HEIGHT /(notes_total-1))
-    x_idx = int( x / horiz_zone )
-    y_idx = int( y / vert_zone )
-
-    note1 = notes_octave[x_idx]
-    note2 = notes_octave[y_idx]
-    if verbose:
-        print("Octave=%i note1=%i note2=%i xy(%i,%i) xy(idx=%i,%i) area(%i*%i)=%i" %
-                ( octave, note1, note2, x, y, x_idx, y_idx, w, h, area ))
-    return note1, note2
-
-#-----------------------------------------------------------------------------------------------
-def play_notes(synthNow, x, y, w, h):
-
-    # Add entries to synthPicks array in config.py for available session synths   
+    # Add entries to synthPicks array in config.py for available session synths
     if synthHotOn:   # Screen Hot Spot Area changes synthPick if movement inside area
         if ( x < synthHotxy[0] and y < synthHotxy[1] ):
             synthNow += 1
             if synthNow > len(synthPicks) - 1:
                 synthNow = 0
     synthCur = synthList[synthPicks[synthNow]]  # Select current synth from your synthPicks
-    synthName = synthCur[1]       # Get the synthName from synthCur 
+    synthName = synthCur[1]       # Get the synthName from synthCur
     use_synth(Synth(synthName))   # Activate the selected synthName
 
-    note1, note2 = get_octave(x, y, w, h)   # Generated notes based on screen x and y position
+    # Add entries to octavePicks array in config.py for available session octaves
+    if octaveHotOn:   # Screen Hot Spot Area changes octavePick if movement inside area
+        if ( x > CAMERA_WIDTH - octaveHotxy[0] and y < octaveHotxy[1] ):
+            octaveNow += 1
+            if octaveNow > len(octavePicks) - 1:
+                octaveNow = 0
+    octaveCur = octaveList[octavePicks[octaveNow]]  # Select current synth from your synthPicks
+    octaveNotes = octaveCur[1]   # Get the synthName from synthCur
+    note1 = octaveNotes[xZone]
+    note2 = octaveNotes[yZone]
 
-    if notesDoubleOn:      # Generate two notes rather than one
+    if noteDoubleOn:      # Generate two notes based on contour x, y rather than one
         play([note1, note2])
     else:
         play(note1)
 
-    if notesSleepVarOn:   # Vary the note duration based on screen height
-        notePosDelay =  h/float( CAMERA_HEIGHT/0.3 )
-        if (notePosDelay < 0.1):
-            notePosDelay = 0.1
-        elif (notePosDelay > 0.3):
-            notePosDelay = 0.3
-        if verbose:
-            print("synth:%i %s  sleep=%.3f seconds" % (synthCur[0], synthName, notePosDelay))
+    if noteSleepVarOn:   # Vary note sleep duration based on screen height
+        notePosDelay =  h/float( CAMERA_HEIGHT/noteSleepMax )
+        if (notePosDelay < noteSleepMin):
+            notePosDelay = noteSleepMin
+        elif (notePosDelay > noteSleepMax):
+            notePosDelay = noteSleepMax
         sleep(notePosDelay)
-    else:
-        sleep(notesSleep)
-    return synthNow
-    
+    else:       # Set fixed note sleep duration
+        sleep(noteSleepMin)
+        notePosDelay = NoteSleepMin
+
+    if verbose:
+        print("Octave:%i  note1=%i  note2=%i  moveXY(%i,%i)  zoneXY(%i,%i)  cArea(%i*%i)=%i" %
+                     ( octaveCur[0], note1, note2, x, y, xZone, yZone, w, h, w*h ))
+        print("synth:%i %s  noteSleep=%.3f seconds" % (synthCur[0], synthName, notePosDelay))
+    return synthNow, octaveNow
+
 #-----------------------------------------------------------------------------------------------
-def sonic_track():
+def sonicTrack():
     if windowOn:
         print("press q to quit opencv display")
     else:
         print("press ctrl-c to quit")
-    if octave_area_on:
-        print("octave_area_on=True  Octave changes by area")
-    else:
-        print("octave_area_on=False Octave default is 5")
     print("Start Motion Tracking ....")
-    cx, cy, cw, ch = 0,0,0,0
-    frame_count = 0
-    start_time = time.time()
+ #   cx, cy, cw, ch = 0,0,0,0
+
     # initialize image1 using image2 (only done first time)
     image2 = vs.read()
     image1 = image2
     grayimage1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
     still_scanning = True
-    synthNow = 0     # Initialize first synth selection from synthPicks
+    synthNow = 0   # Initialize first synth selection from synthPicks
+    octaveNow = 0  # Initialize first synth selection from
     while still_scanning:
         image2 = vs.read()
         grayimage2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
@@ -289,24 +257,30 @@ def sonic_track():
         grayimage1 = grayimage2
 
         if moveData:   # Found Movement
-            cx, cy, cw, ch = moveData[0], moveData[1], moveData[2], moveData[3]
-            synthNow = play_notes(synthNow, cx, cy, cw, ch)
-
+            synthNow, octaveNow = playNotes(synthNow, octaveNow, moveData)
             if windowOn:
+                cx = moveData[0]
+                cy = moveData[1]
                 # show small circle at motion location
                 if SHOW_CIRCLE:
-                    cv2.circle(image2,(cx,cy),CIRCLE_SIZE,(0,255,0), LINE_THICKNESS)
+                    cv2.circle(image2,(cx,cy),CIRCLE_SIZE, cvGreen, LINE_THICKNESS)
                 else:
-                    cv2.rectangle(image2,(cx,cy),(int(cx + cw/2),int(cy+ch/2)),(0,255,0), LINE_THICKNESS)
+                    cw = moveData[2]
+                    ch = moveData[3]
+                    cv2.rectangle(image2,(cx,cy),(int(cx + cw/2),
+                                      int(cy+ch/2)),cvGreen, LINE_THICKNESS)
 
         if windowOn:
-            if diff_window_on:
-                cv2.imshow('Difference Image',differenceimage)
-            if thresh_window_on:
-                cv2.imshow('OpenCV Threshold', thresholdimage)
-            if synthHotOn:    # Red Box indicating synthHotOn Area 
-                cv2.rectangle(image2,(0,0), synthHotxy,(255,0,0), LINE_THICKNESS)                 
-            if WINDOW_BIGGER > 1:  # Note setting a bigger window will slow the FPS
+            if synthHotOn:    # Box top left indicating synthHotOn Area
+                cv2.rectangle(image2,(0,0), synthHotxy, cvBlue, LINE_THICKNESS)
+            if octaveHotOn:  # Box top right indicating synthHotOn Area
+                cv2.rectangle(image2,(CAMERA_WIDTH - octaveHotxy[0], 0),
+                                     (CAMERA_WIDTH - 1,octaveHotxy[1]), cvBlue, LINE_THICKNESS)
+            if windowDiffOn:
+                cv2.imshow('Difference Image', differenceImage)
+            if windowThreshOn:
+                cv2.imshow('OpenCV Threshold', thresholdImage)
+            if windowBigger > 1:  # Note setting a bigger window will slow the FPS
                 image2 = cv2.resize( image2,( big_w, big_h ))
             cv2.imshow('Movement Status  (Press q in Window to Quit)', image2)
 
@@ -339,7 +313,7 @@ if __name__ == '__main__':
                 vs.camera.vflip = CAMERA_VFLIP
                 time.sleep(2.0)  # Allow PiCamera to initialize
 
-            sonic_track()
+            sonicTrack()
     except KeyboardInterrupt:
         vs.stop()
         print("")

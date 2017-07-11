@@ -1,5 +1,5 @@
 # Config.py file for motion-track.py
-# requires sonic_track 0.70 or greater
+# requires sonic_track 0.80 or greater
 
 # Display Settings
 # ----------------
@@ -69,64 +69,52 @@ synthList = [
 (39,'chipnoise'),
 (40,'tech_saws'),
 (41,'sound_in'),
-(42,'sound_in_stereo')]
-
-synthPicks = [36,17,18,31,32]  # Selected Available synth numbers above 
+(42,'sound_in_stereo')
+]
+# Select synthPicks numbers above comman separated (any number or order)
+synthPicks = [ 36, 17, 18, 31, 32 ]
 
 # Currently selected synth for screen motion pick box
 synthHotOn = True  # Turn on HotSpot to cycle through synthPicks
-synthHotSize = 5   # division factor for screen size xy to allocate to Hot Area
- 
+synthHotSize = 5   # Divide screen W,H by synthHotSize determines hotSpot Area W,H
 
 # Lists of notes in each octave range
 # -----------------------------------
-octave_0 = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-octave_1 = [ 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ]
-octave_2 = [ 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 ]
-octave_3 = [ 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47 ]
-octave_4 = [ 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59 ]
-octave_5 = [ 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71 ]
-octave_6 = [ 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83 ]
-octave_7 = [ 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95 ]
-octave_8 = [ 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107 ]
-octave_9 = [ 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119 ]
-octave_10 = [ 120, 121, 122, 123, 124, 125, 126, 127 ]
+octaveList = [
+(0,[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]),
+(1,[ 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ]),
+(2,[ 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 ]),
+(3,[ 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47 ]),
+(4,[ 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59 ]),
+(5,[ 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71 ]),
+(6,[ 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83 ]),
+(7,[ 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95 ]),
+(8,[ 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107 ]),
+(9,[ 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119 ]),
+(10,[ 120, 121, 122, 123, 124, 125, 126, 127 ])
+]
+# Select octavePicks numbers above comman separated (any number an order)
+octavePicks = [ 4, 5, 6 ]
+
+octaveHotOn = True   # Turn on HotSpot to cycle through octavePicks via motion hotspot
+octaveHotSize = 5    # Division factor for cam image size xy to allocate to Hot Area
 
 # python-sonic midi notes settings
 # --------------------------------
-notesDoubleOn = False  # Play two notes rather than one per contour
-notesSleep = 0.1       # default= 0.1 seconds delay between notes played
-notesSleepVarOn = True # default= True Turn On Variable notes sleep time based on screen y position
-octave_area_on = False # default= False  True = contour area changes octave (too slow)
-
-# Default octave if octave_area_on = False
-# ----------------------------------------
-default_octave = octave_5 # set default value for octave if not controlled by area
-default_octave_number = 5 # set default octave number per above setting
-
-# contour area greater than to trigger each octave range (not working well)
-# ------------------------------------------------------
-octave_0_trig = 9000  # sq_px contour greater than area to trigger this octave
-octave_1_trig = 8000  # sq_px contour greater than area to trigger this octave
-octave_2_trig = 6000  # sq_px contour greater than area to trigger this octave
-octave_3_trig = 4000  # sq_px contour greater than area to trigger this octave
-octave_4_trig = 2000  # sq_px contour greater than area to trigger this octave
-octave_5_trig = 1000  # sq_px contour greater than area to trigger this octave
-octave_6_trig = 500   # sq_px contour greater than area to trigger this octave
-octave_7_trig = 200   # sq_px contour greater than area to trigger this octave
-octave_8_trig = 100   # sq_px contour greater than area to trigger this octave
-octave_9_trig = 50    # sq_px contour greater than area to trigger this octave
-octave_10_trig = 40   # sq_px contour greater than area to trigger this octave
+noteSleepVarOn = True # default= True Turn On Variable notes sleep time based on screen y position
+noteDoubleOn = False  # Play two notes rather than one per contour
+noteSleepMin = 0.1     # default= 0.1 seconds delay between notes played
+noteSleepMax = 0.4     # default= 0.4 max delay based on h of contour
 
 # OpenCV Settings
 # ---------------
 MIN_AREA = 100      # Excludes all contours less than or equal to this Area
-SHOW_CIRCLE = True  # True= Show circle for movement, False= Show rectancle on screen
+SHOW_CIRCLE = False # True= Show circle for movement, False= Show rectancle on screen
 CIRCLE_SIZE = 5     # diameter of circle to show motion location in window
 LINE_THICKNESS = 1  # thickness of bounding line in pixels
-WINDOW_BIGGER = 2   # Image Resize multiplier for Images
-diff_window_on = False  # Show OpenCV image difference window
-thresh_window_on = False  # Show OpenCV image Threshold window
+windowBigger = 2    # Image Resize multiplier for Images
+windowDiffOn = False  # Show OpenCV image difference window
+windowThreshOn = False  # Show OpenCV image Threshold window
 
 # You should not have to change these settings
 THRESHOLD_SENSITIVITY = 25
