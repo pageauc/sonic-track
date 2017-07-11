@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-progVer = "ver 0.63"
+progVer = "ver 0.70"
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
@@ -50,8 +50,8 @@ if WEBCAM:
 big_w = int(CAMERA_WIDTH * WINDOW_BIGGER)
 big_h = int(CAMERA_HEIGHT * WINDOW_BIGGER)
 
-notes_delay = float(notes_delay)
-
+synthHotxy = (int(CAMERA_WIDTH/synthHotSize),int(CAMERA_HEIGHT/synthHotSize))
+notesSleep = float(notesSleep)
 
 #-----------------------------------------------------------------------------------------------
 class PiVideoStream:
@@ -228,55 +228,41 @@ def get_octave ( x, y, w, h ):
     return note1, note2
 
 #-----------------------------------------------------------------------------------------------
-def play_notes(x, y, w, h):
+def play_notes(synthNow, x, y, w, h):
 
-   # Select a use_synth by uncommenting a selection (one only)
-    use_synth(PROPHET)
-   # use_synth(BEEP)
-   # use_synth(DSAW)
-   # use_synth(PULSE)
-   # use_synth(TB303)
-   # use_synth(DULL_BELL)
-   # use_synth(PRETTY_BELL)
-   # use_synth(SQUARE)
-   # use_synth(PULSE)
-   # use_synth(SUBPULSE)
-   # use_synth(DTRI)
-   # use_synth(DPULSE)
-   # use_synth(FM)
-   # use_synth(MOD_FM)
-   # use_synth(MOD_SAW)
-   # use_synth(MOD_DSAW)
-   # use_synth(MOD_SINE)
-   # use_synth(MOD_TRI)
-   # use_synth(MOD_PULSE)
-   # use_synth(SUPERSAW)
-   # use_synth(HOOVER)
-
+    # Add entries to synthPicks array in config.py for available session synths   
+    if synthHotOn:   # Screen Hot Spot Area changes synthPick if movement inside area
+        if ( x < synthHotxy[0] and y < synthHotxy[1] ):
+            synthNow += 1
+            if synthNow > len(synthPicks) - 1:
+                synthNow = 0
+    synthCur = synthList[synthPicks[synthNow]]  # Select current synth from your synthPicks
+    synthName = synthCur[1]       # Get the synthName from synthCur 
+    use_synth(Synth(synthName))   # Activate the selected synthName
 
     note1, note2 = get_octave(x, y, w, h)   # Generated notes based on screen x and y position
 
-    if notes_double:      # Generate two notes rather than one
+    if notesDoubleOn:      # Generate two notes rather than one
         play([note1, note2])
     else:
         play(note1)
 
-    if notes_vary_delay:   # Vary the note duration based on screen height
-        notePosDelay = 0.0
+    if notesSleepVarOn:   # Vary the note duration based on screen height
         notePosDelay =  h/float( CAMERA_HEIGHT/0.3 )
         if (notePosDelay < 0.1):
             notePosDelay = 0.1
-        elif (notePosDelay > 0.35):
-            notePosDelay = 0.35 
+        elif (notePosDelay > 0.3):
+            notePosDelay = 0.3
         if verbose:
-            print("note delay=%.3f seconds" % notePosDelay)
+            print("synth:%i %s  sleep=%.3f seconds" % (synthCur[0], synthName, notePosDelay))
         sleep(notePosDelay)
     else:
-        sleep(notes_delay)
-
+        sleep(notesSleep)
+    return synthNow
+    
 #-----------------------------------------------------------------------------------------------
 def sonic_track():
-    if window_on:
+    if windowOn:
         print("press q to quit opencv display")
     else:
         print("press ctrl-c to quit")
@@ -293,6 +279,7 @@ def sonic_track():
     image1 = image2
     grayimage1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
     still_scanning = True
+    synthNow = 0     # Initialize first synth selection from synthPicks
     while still_scanning:
         image2 = vs.read()
         grayimage2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
@@ -301,20 +288,22 @@ def sonic_track():
 
         if moveData:   # Found Movement
             cx, cy, cw, ch = moveData[0], moveData[1], moveData[2], moveData[3]
-            play_notes(cx, cy, cw, ch)
+            synthNow = play_notes(synthNow, cx, cy, cw, ch)
 
-            if window_on:
+            if windowOn:
                 # show small circle at motion location
                 if SHOW_CIRCLE:
                     cv2.circle(image2,(cx,cy),CIRCLE_SIZE,(0,255,0), LINE_THICKNESS)
                 else:
                     cv2.rectangle(image2,(cx,cy),(int(cx + cw/2),int(cy+ch/2)),(0,255,0), LINE_THICKNESS)
 
-        if window_on:
+        if windowOn:
             if diff_window_on:
                 cv2.imshow('Difference Image',differenceimage)
             if thresh_window_on:
                 cv2.imshow('OpenCV Threshold', thresholdimage)
+            if synthHotOn:    # Red Box indicating synthHotOn Area 
+                cv2.rectangle(image2,(0,0), synthHotxy,(255,0,0), LINE_THICKNESS)                 
             if WINDOW_BIGGER > 1:  # Note setting a bigger window will slow the FPS
                 image2 = cv2.resize( image2,( big_w, big_h ))
             cv2.imshow('Movement Status  (Press q in Window to Quit)', image2)
