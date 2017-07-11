@@ -35,9 +35,10 @@ From logged in RPI SSH session or console terminal perform the following.
     ./setup.sh
 
 ### Opencv3 Install (if required)
-sonic-track.py requires opencv3 to be installed on the latest RPI Jessie disto. I have written a menu driven
-install script called cv3-setup.sh.  Use this if you do not have opencv3 already installed.  
-cv3-setup.sh menu picks allow updating, installing dependencies, downloads, cmake, compile and make install of opencv 3.0.0.
+sonic-track.py requires opencv3 to be installed on the latest RPI Jessie disto.
+I have written a menu driven install script called cv3-setup.sh.  Use this if
+you do not have opencv3 already installed. cv3-setup.sh menu picks allow updating,
+installing dependencies, downloads, cmake, compile and make install of opencv 3.0.0.
 I tried opencv 3.2.0 but had errors so it is best to stick with 3.0.0 per this script.
 To Run the whiptail menu setup script.  From a logged in ssh or terminal session run
 
@@ -46,14 +47,25 @@ To Run the whiptail menu setup script.  From a logged in ssh or terminal session
  
 You will be asked to reboot at certain steps.  
 
-More information is available here http://www.pyimagesearch.com/2015/10/26/how-to-install-opencv-3-on-raspbian-jessie/ 
+More information is available   
+here http://www.pyimagesearch.com/2015/10/26/how-to-install-opencv-3-on-raspbian-jessie/ 
     
 ### How to Run
-Default is SSH or Terminal console only display. Make sure pixel desktop is enabled and logged in.  This can be done from raspi-config setting.
-This is required for the sonic-track.sh to start sonic-pi on the desktop from an ssh only session.
+Default is SSH or Terminal console only display. Make sure pixel desktop is
+ enabled and logged in.  This can be done from raspi-config setting.
+This is required for the sonic-track.sh to start sonic-pi on the desktop from
+ an ssh only session.
 
-Use Nano to Edit config.py variables and available.  Select PiCamera or USB web cam depending on your requirements.
-notes_midi, octave triggers and/or notes_delay, Etc. See other variables and comments for additional variable customization settings.  
+Use Nano to Edit config.py variable settings. Select PiCamera or USB web camera
+ depending on what you have installed or want to use. 
+You should set the appropriate camera hflip, vflip as appropriate.
+You can customize the synthPicks.  This is a comma delimited list of entries
+ from the synthList above.  You can select any number and arrange them in any order. 
+This list is used to to switch synth when motion is detected in the hotspot area
+ (usually top/left corner)  You can also select a default_octave from the list
+ of octave's above. You may also want to look at notesSleepOn, notesSleepVarOn, 
+ notesSleep, notenotes_midi, octave triggers, Etc. See other variables and
+ comments for additional variable customization settings.    
 From SSH session, console or GUI desktop terminal session execute the following commands.
 Make sure a speaker is connected to the pi before starting.
 
@@ -95,7 +107,7 @@ The play_notes function uses the motion contour center and width and height eg x
 These values are used to generate notes, noteSleep and/or change octave based on contour area.  Sound values are send
 to sonic-pi interface.  Sounds can be changed using synth settings per config.py synthPicks.  The reference numbers
 are from the synthList and the synthPicks list can contain any number of values separated by commas and
- arranged in any order.  These can be changes when sonic-track.sh is running my creating movement in the hotspot area
+ arranged in any order.  These can be changed when sonic-track.sh is running my creating movement in the hotspot area
 (default is top left corner 1/5 of the screen height and width. 
         
 For more information about psonic see https://github.com/gkvoelkl/python-sonic    
