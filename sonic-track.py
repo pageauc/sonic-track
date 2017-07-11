@@ -10,7 +10,7 @@ progName = os.path.basename(__file__)
 print("%s %s using sonic-pi, pi-camera, python3 and OpenCV" % (progName, progVer))
 print("Loading Please Wait ....")
 
-# Check for variable file to import and error out if not found.
+# Check for config variable file to import and error out if not found.
 configFilePath = baseDir + "config.py"
 if not os.path.exists(configFilePath):
     print("ERROR - Missing config.py file - Could not find Configuration file %s" % (configFilePath))
@@ -41,15 +41,14 @@ from picamera import PiCamera
 from threading import Thread
 from psonic import *
 
-# Setup global variables for notes
-# Change this into a function to allow variable notes in octave range
-
+# See if Web Cam is selected
 if WEBCAM:
     CAMERA_WIDTH = WEBCAM_WIDTH
     CAMERA_HEIGHT = WEBCAM_HEIGHT
 big_w = int(CAMERA_WIDTH * WINDOW_BIGGER)
 big_h = int(CAMERA_HEIGHT * WINDOW_BIGGER)
 
+# initialize hotspot area variable
 synthHotxy = (int(CAMERA_WIDTH/synthHotSize),int(CAMERA_HEIGHT/synthHotSize))
 notesSleep = float(notesSleep)
 
@@ -170,7 +169,10 @@ def trackPoint(grayimage1, grayimage2):
     return moveData
 
 #-----------------------------------------------------------------------------------------------
-def get_octave ( x, y, w, h ):
+def get_octave ( x, y, w, h ):  
+# Needs more work to improve since not working well
+# Will look at a pick list similar to synthPick
+                              
     area = w * h
     if octave_area_on:
         if area > octave_0_trig:
