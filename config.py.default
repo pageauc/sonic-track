@@ -25,6 +25,7 @@ CAMERA_HFLIP = False   # Flip the camera image horizontally if required
 CAMERA_ROTATION = 0    # Rotate camera image valid values are 0, 90, 180, 270
 CAMERA_FRAMERATE = 10  # frame rate for video stream default=55 90 max for V1 cam. V2 can be higher
 
+# List of Available sythesizers and a reference number for adding items to synthPick list below
 synthList = [
 (0,'dull_bell'),
 (1,'pretty_bell'),
@@ -70,10 +71,12 @@ synthList = [
 (41,'sound_in'),
 (42,'sound_in_stereo')]
 
+synthPicks = [36,17,18,31,32]  # Selected Available synth numbers above 
+
 # Currently selected synth for screen motion pick box
-synthHotOn = True           # Turn on HotSpot to cycle through synthPicks
-synthHotSize = 5            # division factor for screen size xy to allocate to Hot Area
-synthPicks = [36,17,18,31,32]  # Selected Available synth numbers above  
+synthHotOn = True  # Turn on HotSpot to cycle through synthPicks
+synthHotSize = 5   # division factor for screen size xy to allocate to Hot Area
+ 
 
 # Lists of notes in each octave range
 # -----------------------------------
@@ -91,41 +94,39 @@ octave_10 = [ 120, 121, 122, 123, 124, 125, 126, 127 ]
 
 # python-sonic midi notes settings
 # --------------------------------
-notesDoubleOn = False    # Play two notes rather than one per contour
-notesSleep = 0.1         # default = 0.1 seconds delay between notes played
-notesSleepVarOn = True   # default= True Turn On Variable notes sleep based on screen y position
-octave_area_on = False   # default= False  True = contour area changes octave (too slow)
+notesDoubleOn = False  # Play two notes rather than one per contour
+notesSleep = 0.1       # default= 0.1 seconds delay between notes played
+notesSleepVarOn = True # default= True Turn On Variable notes sleep time based on screen y position
+octave_area_on = False # default= False  True = contour area changes octave (too slow)
 
 # Default octave if octave_area_on = False
 # ----------------------------------------
-default_octave = octave_5   # set default value for octave if not controlled by area
-default_octave_number = 5   # set default octave number per above setting
+default_octave = octave_5 # set default value for octave if not controlled by area
+default_octave_number = 5 # set default octave number per above setting
 
 # contour area greater than to trigger each octave range (not working well)
 # ------------------------------------------------------
-octave_0_trig = 9000    # sq_px contour greater than area to trigger this octave
-octave_1_trig = 8000    # sq_px contour greater than area to trigger this octave
-octave_2_trig = 6000    # sq_px contour greater than area to trigger this octave
-octave_3_trig = 4000    # sq_px contour greater than area to trigger this octave
-octave_4_trig = 2000    # sq_px contour greater than area to trigger this octave
-octave_5_trig = 1000    # sq_px contour greater than area to trigger this octave
-octave_6_trig = 500     # sq_px contour greater than area to trigger this octave
-octave_7_trig = 200     # sq_px contour greater than area to trigger this octave
-octave_8_trig = 100     # sq_px contour greater than area to trigger this octave
-octave_9_trig = 50      # sq_px contour greater than area to trigger this octave
-octave_10_trig = 40     # sq_px contour greater than area to trigger this octave
+octave_0_trig = 9000  # sq_px contour greater than area to trigger this octave
+octave_1_trig = 8000  # sq_px contour greater than area to trigger this octave
+octave_2_trig = 6000  # sq_px contour greater than area to trigger this octave
+octave_3_trig = 4000  # sq_px contour greater than area to trigger this octave
+octave_4_trig = 2000  # sq_px contour greater than area to trigger this octave
+octave_5_trig = 1000  # sq_px contour greater than area to trigger this octave
+octave_6_trig = 500   # sq_px contour greater than area to trigger this octave
+octave_7_trig = 200   # sq_px contour greater than area to trigger this octave
+octave_8_trig = 100   # sq_px contour greater than area to trigger this octave
+octave_9_trig = 50    # sq_px contour greater than area to trigger this octave
+octave_10_trig = 40   # sq_px contour greater than area to trigger this octave
 
 # OpenCV Settings
 # ---------------
-MIN_AREA = 100     # excludes all contours less than or equal to this Area
-diff_window_on = False  # Show OpenCV image difference window
-thresh_window_on = False  # Show OpenCV image Threshold window
-SHOW_CIRCLE = True  # show a circle otherwise show bounding rectancle on window
+MIN_AREA = 100      # Excludes all contours less than or equal to this Area
+SHOW_CIRCLE = True  # True= Show circle for movement, False= Show rectancle on screen
 CIRCLE_SIZE = 5     # diameter of circle to show motion location in window
 LINE_THICKNESS = 1  # thickness of bounding line in pixels
-WINDOW_BIGGER = 2   # Resize multiplier for Movement Status Window
-                    # if gui_window_on=True then makes opencv window bigger
-                    # Note if the window is larger than 1 then a reduced frame rate will occur
+WINDOW_BIGGER = 2   # Image Resize multiplier for Images
+diff_window_on = False  # Show OpenCV image difference window
+thresh_window_on = False  # Show OpenCV image Threshold window
 
 # You should not have to change these settings
 THRESHOLD_SENSITIVITY = 25
