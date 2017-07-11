@@ -76,7 +76,7 @@ config.py variable then ctrl-x y to save change(s)
     
 edit the following setting the ctrl-x y to save
     
-    window_on = True
+    windowOn = True
 
 You can either start sonic-pi from the desktop the in the terminal window start sonic-track.py
 
@@ -92,8 +92,11 @@ Edit the config.py file and set variables as per comments
     nano config.py
  
 The play_notes function uses the motion contour center and width and height eg x, y, h, w motion variables.
-These values are used to generate notes and/or change octave based on contour area.  Sound values are send
-to sonic-pi interface.  Sounds can be changed using synth settings per the psonic.py python library        
+These values are used to generate notes, noteSleep and/or change octave based on contour area.  Sound values are send
+to sonic-pi interface.  Sounds can be changed using synth settings per config.py synthPicks.  The reference numbers
+are from the synthList and the synthPicks list can contain any number of values separated by commas and
+ arranged in any order.  These can be changes when sonic-track.sh is running my creating movement in the hotspot area
+(default is top left corner 1/5 of the screen height and width. 
         
 For more information about psonic see https://github.com/gkvoelkl/python-sonic    
 and midi values see  http://www.electronics.dit.ie/staff/tscarff/Music_technology/midi/midi_note_numbers_for_octaves.htm
