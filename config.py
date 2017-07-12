@@ -63,16 +63,15 @@ synthList = [
 (33,'beep'),
 (34,'tri'),
 (35,'dtri'),
-(36,'pluck'),
-(37,'chiplead'),
-(38,'chipbass'),
-(39,'chipnoise'),
-(40,'tech_saws'),
-(41,'sound_in'),
-(42,'sound_in_stereo')
+(36,'chiplead'),
+(37,'chipbass'),
+(38,'chipnoise'),
+(39,'tech_saws'),
+(40,'sound_in'),
+(41,'sound_in_stereo')
 ]
 # Select synthPicks numbers above comman separated (any number or order)
-synthPicks = [ 36, 17, 18, 31, 32 ]
+synthPicks = [ 1, 17, 18, 31, 32 , 30]
 
 # Currently selected synth for screen motion pick box
 synthHotOn = True  # Turn on HotSpot to cycle through synthPicks
@@ -94,7 +93,7 @@ octaveList = [
 (10,[ 120, 121, 122, 123, 124, 125, 126, 127 ])
 ]
 # Select octavePicks numbers above comman separated (any number an order)
-octavePicks = [ 4, 5, 6 ]
+octavePicks = [ 4, 5, 6, 7 ]
 
 octaveHotOn = True   # Turn on HotSpot to cycle through octavePicks via motion hotspot
 octaveHotSize = 5    # Division factor for cam image size xy to allocate to Hot Area

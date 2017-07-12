@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-progVer = "ver 0.81"
+progVer = "ver 0.82"
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
@@ -68,6 +68,7 @@ noteSleepMin = float(noteSleepMin)  # make sure noteSleepMin is a float
 cvBlue = (255,0,0)
 cvGreen = (0,255,0)
 cvRed = (0,0,255)
+FONT_SCALE = .3             # OpenCV window text font size scaling factor default=.5 (lower is smaller)
 
 #-----------------------------------------------------------------------------------------------
 class PiVideoStream:
@@ -187,13 +188,18 @@ def trackPoint(grayimage1, grayimage2):
 
 #-----------------------------------------------------------------------------------------------
 def playNotes( synthNow, octaveNow, moveData ):
+    global menuLock
+    global menuTime
+    
     x, y, w, h = moveData[0], moveData[1], moveData[2], moveData[3]
     xZone = int( x / notesHorizZone)
     yZone = int( y / notesVertZone )
 
     # Add entries to synthPicks array in config.py for available session synths
     if synthHotOn:   # Screen Hot Spot Area changes synthPick if movement inside area
-        if ( x < synthHotxy[0] and y < synthHotxy[1] ):
+        if ( x < synthHotxy[0] and y < synthHotxy[1] ) and not menuLock:
+            menuLock = True
+            menuTime = time.time()
             synthNow += 1
             if synthNow > len(synthPicks) - 1:
                 synthNow = 0
@@ -203,7 +209,9 @@ def playNotes( synthNow, octaveNow, moveData ):
 
     # Add entries to octavePicks array in config.py for available session octaves
     if octaveHotOn:   # Screen Hot Spot Area changes octavePick if movement inside area
-        if ( x > CAMERA_WIDTH - octaveHotxy[0] and y < octaveHotxy[1] ):
+        if ( x > CAMERA_WIDTH - octaveHotxy[0] and y < octaveHotxy[1] ) and not menuLock:
+            menuLock = True
+            menuTime = time.time()
             octaveNow += 1
             if octaveNow > len(octavePicks) - 1:
                 octaveNow = 0
@@ -212,6 +220,10 @@ def playNotes( synthNow, octaveNow, moveData ):
     note1 = octaveNotes[xZone]
     note2 = octaveNotes[yZone]
 
+    if menuLock:
+        if (time.time() - menuTime > 2) :  
+            menuLock = False  # unlock motion menu after two seconds
+    
     if noteDoubleOn:      # Generate two notes based on contour x, y rather than one
         play([note1, note2])
     else:
@@ -236,6 +248,11 @@ def playNotes( synthNow, octaveNow, moveData ):
 
 #-----------------------------------------------------------------------------------------------
 def sonicTrack():
+    global menuLock
+    global menuTime
+    menuTime = time.time()
+    menuLock = False
+    
     if windowOn:
         print("press q to quit opencv display")
     else:
@@ -265,15 +282,21 @@ def sonicTrack():
                 else:
                     cw = moveData[2]
                     ch = moveData[3]
-                    cv2.rectangle(image2,(cx,cy),(int(cx + cw/2),
-                                      int(cy+ch/2)),cvGreen, LINE_THICKNESS)
+                    cv2.rectangle(image2,(int(cx - cw/2),int(cy - ch/2)),(int(cx + cw/2), int(cy+ch/2)),
+                                                          cvGreen, LINE_THICKNESS)
 
         if windowOn:
             if synthHotOn:    # Box top left indicating synthHotOn Area
                 cv2.rectangle(image2,(0,0), synthHotxy, cvBlue, LINE_THICKNESS)
+                synthText = synthList[synthPicks[synthNow]][1]
+                cv2.putText( image2, synthText, (5, int(synthHotxy[1]/2)),
+                                cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
             if octaveHotOn:  # Box top right indicating synthHotOn Area
                 cv2.rectangle(image2,(CAMERA_WIDTH - octaveHotxy[0], 0),
                                      (CAMERA_WIDTH - 1,octaveHotxy[1]), cvBlue, LINE_THICKNESS)
+                octaveText = ("octave %i" % octavePicks[octaveNow])                     
+                cv2.putText( image2, octaveText, (CAMERA_WIDTH - int(octaveHotxy[0] - 5), int(octaveHotxy[1]/2)),
+                                cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)                                     
             if windowDiffOn:
                 cv2.imshow('Difference Image', differenceImage)
             if windowThreshOn:
