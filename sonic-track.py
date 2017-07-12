@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-progVer = "ver 0.80"
+progVer = "ver 0.81"
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
@@ -226,7 +226,7 @@ def playNotes( synthNow, octaveNow, moveData ):
         sleep(notePosDelay)
     else:       # Set fixed note sleep duration
         sleep(noteSleepMin)
-        notePosDelay = NoteSleepMin
+        notePosDelay = noteSleepMin
 
     if verbose:
         print("Octave:%i  note1=%i  note2=%i  moveXY(%i,%i)  zoneXY(%i,%i)  cArea(%i*%i)=%i" %
@@ -241,8 +241,6 @@ def sonicTrack():
     else:
         print("press ctrl-c to quit")
     print("Start Motion Tracking ....")
- #   cx, cy, cw, ch = 0,0,0,0
-
     # initialize image1 using image2 (only done first time)
     image2 = vs.read()
     image1 = image2
