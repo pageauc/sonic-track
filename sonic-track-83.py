@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 progVer = "ver 0.83"
+# Archived this older version on GitHub 
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
