@@ -56,6 +56,7 @@ big_h = int(CAMERA_HEIGHT * windowBigger)
 # initialize hotspot area variables
 synthHotxy = (int(CAMERA_WIDTH/synthHotSize),int(CAMERA_HEIGHT/synthHotSize))
 octaveHotxy = (int(CAMERA_WIDTH/octaveHotSize),int(CAMERA_HEIGHT/octaveHotSize))
+drumHotxy = (int(CAMERA_WIDTH/drumHotSize),int(CAMERA_HEIGHT/drumHotSize))
 
 # split screen into horz and vert zones for note changes
 octaveStart = octavePicks[0]
@@ -186,15 +187,15 @@ def trackPoint(grayimage1, grayimage2):
                 moveData = [cx, cy, w, h]
     return moveData
 
- def playDrums(moveData):
+def playDrums(moveData):
     global menuLock
     global menuTime
-
     
 #-----------------------------------------------------------------------------------------------
 def playNotes( synthNow, octaveNow, moveData ):
     global menuLock
     global menuTime
+    drumNow = 0
     
     x, y, w, h = moveData[0], moveData[1], moveData[2], moveData[3]
     xZone = int( x / notesHorizZone)
@@ -266,6 +267,26 @@ def playNotes( synthNow, octaveNow, moveData ):
     return synthNow, octaveNow
 
 #-----------------------------------------------------------------------------------------------
+def drumBass():
+    c = chord(E3, MAJOR7)
+    while True:
+        use_synth(PROPHET)
+        play(random.choice(c), release=0.6)
+        sleep(0.5)
+              
+#-----------------------------------------------------------------------------------------------
+def drumKick():
+    while True:
+        sample(DRUM_HEAVY_KICK)
+        sleep(1)  
+        
+#-----------------------------------------------------------------------------------------------
+def drumSnare():
+    while True:
+        sample(DRUM_SNARE_HARD)
+        sleep(1)
+        
+#-----------------------------------------------------------------------------------------------
 def sonicTrack():
     global menuLock
     global menuTime
@@ -284,6 +305,19 @@ def sonicTrack():
     still_scanning = True
     synthNow = 0   # Initialize first synth selection from synthPicks
     octaveNow = 0  # Initialize first synth selection from
+    drumNow = 0
+
+    # These Start Threads for functions per target  
+    if drumBassOn:  
+        bassThread = Thread(target=drumBass)
+        bassThread.start()    
+    if drumSnareOn:
+        snareThread = Thread(target=drumSnare)
+        snareThread.start()    
+    if drumKickOn:
+        kickThread = Thread(target=drumKick)  
+        kickThread.start()
+
     while still_scanning:
         image2 = vs.read()
         grayimage2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)

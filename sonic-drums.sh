@@ -17,5 +17,5 @@ else
 fi
 
 echo "INFO - starting $0"
-./sonic-track.py
+./sonic-drums.py
 

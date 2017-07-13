@@ -1,5 +1,5 @@
 # Config.py file for motion-track.py
-# requires sonic_track 0.80 or greater
+# requires sonic_track 0.83 or greater
 
 # Display Settings
 # ----------------
@@ -24,6 +24,22 @@ CAMERA_VFLIP = False   # Flip the camera image vertically if required
 CAMERA_HFLIP = False   # Flip the camera image horizontally if required
 CAMERA_ROTATION = 0    # Rotate camera image valid values are 0, 90, 180, 270
 CAMERA_FRAMERATE = 10  # frame rate for video stream default=55 90 max for V1 cam. V2 can be higher
+
+# Motion Menu Settings
+# Activate on screen motion menu pick box
+synthHotOn = True  # Turn on HotSpot to cycle through synthPicks
+synthHotSize = 5   # Divide screen W,H by synthHotSize determines hotSpot Area W,H
+
+octaveHotOn = True   # Turn on HotSpot to cycle through octavePicks via motion hotspot
+octaveHotSize = 5    # Division factor for cam image size xy to allocate to Hot Area
+
+# Not yet implemented.  Using Threads
+drumHotOn = True
+drumHotSize = 5
+
+drumKickOn = True     # Thread for Kick Drum
+drumSnareOn = True    # Thread for Snare Drum
+drumBassOn = True     # Thread for Random effects
 
 # List of Available sythesizers and a reference number for adding items to synthPick list below
 synthList = [
@@ -70,12 +86,8 @@ synthList = [
 (40,'sound_in'),
 (41,'sound_in_stereo')
 ]
-# Select synthPicks numbers above comman separated (any number or order)
+# Select synthPicks numbers above comma separated (any number or order)
 synthPicks = [ 1, 17, 18, 31, 32 , 30]
-
-# Currently selected synth for screen motion pick box
-synthHotOn = True  # Turn on HotSpot to cycle through synthPicks
-synthHotSize = 5   # Divide screen W,H by synthHotSize determines hotSpot Area W,H
 
 # Lists of notes in each octave range
 # -----------------------------------
@@ -92,11 +104,34 @@ octaveList = [
 (9,[ 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119 ]),
 (10,[ 120, 121, 122, 123, 124, 125, 126, 127 ])
 ]
-# Select octavePicks numbers above comman separated (any number an order)
+# Select octavePicks numbers above comma separated (any number an order)
 octavePicks = [ 4, 5, 6, 7 ]
 
-octaveHotOn = True   # Turn on HotSpot to cycle through octavePicks via motion hotspot
-octaveHotSize = 5    # Division factor for cam image size xy to allocate to Hot Area
+## Drum Sounds
+drumList = [
+(0,'drum_heavy_kick'),
+(1,'drum_tom_mid_soft'),
+(2,'drum_tom_mid_hard'),
+(3,'drum_tom_lo_soft'),
+(4,'drum_tom_lo_hard'),
+(5,'drum_tom_hi_soft'),
+(6,'drum_tom_hi_hard'),
+(7,'drum_splash_soft'),
+(8,'drum_splash_hard'),
+(9,'drum_snare_soft'),
+(10,'drum_snare_hard'),
+(11,'drum_cymbal_soft'),
+(12,'drum_cymbal_hard'),
+(13,'drum_cymbal_open'),
+(14,'drum_cymbal_closed'),
+(15,'drum_cymbal_pedal'),
+(16,'drum_bass_soft'),
+(17,'drum_bass_hard'),
+(18,'drum_cowbell'),
+(19,'drum_roll')
+]
+# Select drumPicks numbers above comma separated (any number an order)
+drumPicks = [0, 8, 18, 10]
 
 # python-sonic midi notes settings
 # --------------------------------
