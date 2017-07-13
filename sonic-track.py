@@ -186,16 +186,11 @@ def trackPoint(grayimage1, grayimage2):
                 moveData = [cx, cy, w, h]
     return moveData
 
- def playDrums(moveData):
-    global menuLock
-    global menuTime
-
-    
 #-----------------------------------------------------------------------------------------------
 def playNotes( synthNow, octaveNow, moveData ):
     global menuLock
     global menuTime
-    
+
     x, y, w, h = moveData[0], moveData[1], moveData[2], moveData[3]
     xZone = int( x / notesHorizZone)
     yZone = int( y / notesVertZone )
@@ -225,28 +220,14 @@ def playNotes( synthNow, octaveNow, moveData ):
     note1 = octaveNotes[xZone]
     note2 = octaveNotes[yZone]
 
-    if drumHotOn:
-        if ( x < drumHotxy[0] and y < drumHotxy[1] ) and not menuLock:    
-            menuLock = True
-            menuTime = time.time()
-            drumNow += 1
-            if drumNow > len(drumPicks) - 1:
-                drumNow = 0            
-    drumCur = drumList[drumPicks[drumNow]]  # Select current synth from your synthPicks
-    drumNotes = drumCur[1]   # Get the synthName from synthCur
-    drum1 = drumNotes[xZone]
-    drum2 = drumNotes[yZone]
-            
     if menuLock:
-        if (time.time() - menuTime > 2) :  
+        if (time.time() - menuTime > 2) :
             menuLock = False  # unlock motion menu after two seconds
-    
+
     if noteDoubleOn:      # Generate two notes based on contour x, y rather than one
         play([note1, note2])
-        sample(drum1, drum2)
     else:
         play(note1)
-        sample(drum1)
 
     if noteSleepVarOn:   # Vary note sleep duration based on screen height
         notePosDelay =  h/float( CAMERA_HEIGHT/noteSleepMax )
@@ -271,7 +252,7 @@ def sonicTrack():
     global menuTime
     menuTime = time.time()
     menuLock = False
-    
+
     if windowOn:
         print("press q to quit opencv display")
     else:
@@ -313,9 +294,9 @@ def sonicTrack():
             if octaveHotOn:  # Box top right indicating synthHotOn Area
                 cv2.rectangle(image2,(CAMERA_WIDTH - octaveHotxy[0], 0),
                                      (CAMERA_WIDTH - 1,octaveHotxy[1]), cvBlue, LINE_THICKNESS)
-                octaveText = ("octave %i" % octavePicks[octaveNow])                     
+                octaveText = ("octave %i" % octavePicks[octaveNow])
                 cv2.putText( image2, octaveText, (CAMERA_WIDTH - int(octaveHotxy[0] - 5), int(octaveHotxy[1]/2)),
-                                cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)                                     
+                                cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
             if windowDiffOn:
                 cv2.imshow('Difference Image', differenceImage)
             if windowThreshOn:
