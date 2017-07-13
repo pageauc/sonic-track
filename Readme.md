@@ -2,7 +2,8 @@
 #### Tracks camera motion contours x,y,w,h values and generates sounds via sonic-pi.  
 #### Uses pi-camera or webcam, python3, Opencv3, python-sonic, pythonosc, sonic-pi, powered speaker or HDMI TV
 
-#### YouTube Video https://youtu.be/RCIUlv431E0
+#### YouTube Video (motion activated menus https://youtu.be/PQjpskPAtR0
+#### YouTube Video sonic-track into https://youtu.be/RCIUlv431E0
 
 ### Introduction
 This demo app sends camera movement tracking data to sonic-pi via psonic.py and pythonosc.
