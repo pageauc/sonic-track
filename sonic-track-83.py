@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-progVer = "ver 0.85"
+progVer = "ver 0.83"
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
@@ -54,10 +54,8 @@ big_w = int(CAMERA_WIDTH * windowBigger)
 big_h = int(CAMERA_HEIGHT * windowBigger)
 
 # initialize hotspot area variables
-menuTimeout = 2.0
 synthHotxy = (int(CAMERA_WIDTH/synthHotSize),int(CAMERA_HEIGHT/synthHotSize))
 octaveHotxy = (int(CAMERA_WIDTH/octaveHotSize),int(CAMERA_HEIGHT/octaveHotSize))
-drumHotxy = (int(CAMERA_WIDTH/drumHotSize),int(CAMERA_HEIGHT/drumHotSize))
 
 # split screen into horz and vert zones for note changes
 octaveStart = octavePicks[0]
@@ -188,16 +186,11 @@ def trackPoint(grayimage1, grayimage2):
                 moveData = [cx, cy, w, h]
     return moveData
 
-def playDrums(moveData):
-    global menuLock
-    global menuTime
-    
 #-----------------------------------------------------------------------------------------------
 def playNotes( synthNow, octaveNow, moveData ):
     global menuLock
     global menuTime
-    drumNow = 0
-    
+
     x, y, w, h = moveData[0], moveData[1], moveData[2], moveData[3]
     xZone = int( x / notesHorizZone)
     yZone = int( y / notesVertZone )
@@ -227,28 +220,14 @@ def playNotes( synthNow, octaveNow, moveData ):
     note1 = octaveNotes[xZone]
     note2 = octaveNotes[yZone]
 
-    if drumHotOn:
-        if ( x < drumHotxy[0] and y < drumHotxy[1] ) and not menuLock:    
-            menuLock = True
-            menuTime = time.time()
-            drumNow += 1
-            if drumNow > len(drumPicks) - 1:
-                drumNow = 0            
-    drumCur = drumList[drumPicks[drumNow]]  # Select current synth from your synthPicks
-    drumNotes = drumCur[1]   # Get the synthName from synthCur
-    drum1 = drumNotes[xZone]
-    drum2 = drumNotes[yZone]
-            
     if menuLock:
-        if (time.time() - menuTime > menuTimeout) :  
+        if (time.time() - menuTime > 2) :
             menuLock = False  # unlock motion menu after two seconds
-    
+
     if noteDoubleOn:      # Generate two notes based on contour x, y rather than one
         play([note1, note2])
-        sample(drum1, drum2)
     else:
         play(note1)
-        sample(drum1)
 
     if noteSleepVarOn:   # Vary note sleep duration based on screen height
         notePosDelay =  h/float( CAMERA_HEIGHT/noteSleepMax )
@@ -268,32 +247,12 @@ def playNotes( synthNow, octaveNow, moveData ):
     return synthNow, octaveNow
 
 #-----------------------------------------------------------------------------------------------
-def drumBass():
-    c = chord(E3, MAJOR7)
-    while True:
-        use_synth(PROPHET)
-        play(random.choice(c), release=0.6)
-        sleep(0.5)
-              
-#-----------------------------------------------------------------------------------------------
-def drumKick():
-    while True:
-        sample(DRUM_HEAVY_KICK)
-        sleep(1)  
-        
-#-----------------------------------------------------------------------------------------------
-def drumSnare():
-    while True:
-        sample(DRUM_SNARE_HARD)
-        sleep(1)
-        
-#-----------------------------------------------------------------------------------------------
 def sonicTrack():
     global menuLock
     global menuTime
     menuTime = time.time()
     menuLock = False
-    
+
     if windowOn:
         print("press q to quit opencv display")
     else:
@@ -306,19 +265,6 @@ def sonicTrack():
     still_scanning = True
     synthNow = 0   # Initialize first synth selection from synthPicks
     octaveNow = 0  # Initialize first synth selection from
-    drumNow = 0
-
-    # These Start Threads for functions per target  
-    if drumBassOn:  
-        bassThread = Thread(target=drumBass)
-        bassThread.start()    
-    if drumSnareOn:
-        snareThread = Thread(target=drumSnare)
-        snareThread.start()    
-    if drumKickOn:
-        kickThread = Thread(target=drumKick)  
-        kickThread.start()
-
     while still_scanning:
         image2 = vs.read()
         grayimage2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
@@ -348,9 +294,9 @@ def sonicTrack():
             if octaveHotOn:  # Box top right indicating synthHotOn Area
                 cv2.rectangle(image2,(CAMERA_WIDTH - octaveHotxy[0], 0),
                                      (CAMERA_WIDTH - 1,octaveHotxy[1]), cvBlue, LINE_THICKNESS)
-                octaveText = ("octave %i" % octavePicks[octaveNow])                     
+                octaveText = ("octave %i" % octavePicks[octaveNow])
                 cv2.putText( image2, octaveText, (CAMERA_WIDTH - int(octaveHotxy[0] - 5), int(octaveHotxy[1]/2)),
-                                cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)                                     
+                                cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
             if windowDiffOn:
                 cv2.imshow('Difference Image', differenceImage)
             if windowThreshOn:
