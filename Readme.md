@@ -6,11 +6,24 @@
 #### YouTube Video sonic-track into https://youtu.be/RCIUlv431E0
 
 ### Introduction
-This demo app sends camera movement tracking data to sonic-pi via psonic.py and pythonosc.
+This demo app sends camera movement tracking data to sonic-pi music program.  sonic-track sends data to sonic-pi via psonic.py and pythonosc.
 You will need a pi camera and a powered speaker connected to the Raspberry Pi audio/video plug via appropriate cables or you can attach RPI
 to an HDMI TV via HDMI cable and sound will redirect to TV speakers.
 I thought it would be interesting to point the camera at a fish tank or other source of
 video movement to see what sounds are generated. You can also stand in front of the camera and generate sounds via body movements.
+
+#### Some ideas I would like to work on
+
+* Air drum eg bongo drum feature activated by body movement
+* Simon type sound motion game to try to repeat a series of notes using body movement
+ ( see hotspot game https://github.com/pageauc/hotspot-game )
+* Implement bird call type game to use motion tracking to pick the bird associated with
+ a sound from an on screen image of different birds. I have a poke-pi demo that allows displaying images on screen (not published)
+ it allows for interactively taking an image of a toy or object then you can use the small icon in the motion tracking
+ environment to do something.  I was visualizing something like pokemon
+* Same as birds idea above but for any animals Eg farmyard or wild animals.
+* Control a device and give audio feed back.  Eg higher sound for higher settings.
+
 This program demo is a very basic setup but more elaborate sonic-pi sound generation algorithms are possible.
 
 ### How to Install
@@ -156,7 +169,7 @@ a quad core raspberry pi with the latest Jessie build installed.
 note ranges required for input
 * Create alternate configuration settings via separate config.py files.  This would allow
 changing how notes are generated.
-* Setup a method to easily change synth settings
+* Setup a method to easily change synth settings  (implemented pickList)
 
 ### Credits  
 Some of this code is based on a YouTube tutorial by
