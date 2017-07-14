@@ -234,8 +234,8 @@ def playNotes( synthNow, octaveNow, moveData ):
             drumNow += 1
             if drumNow > len(drumPicks) - 1:
                 drumNow = 0            
-    drumCur = drumList[drumPicks[drumNow]]  # Select current synth from your synthPicks
-    drumNotes = drumCur[1]   # Get the synthName from synthCur
+    drumCur = drumList[drumPicks[drumNow]]  # Select drum current from drumList index
+    drumNotes = drumCur[1]   # Get the drumNotes from drumCur
     drum1 = drumNotes[xZone]
     drum2 = drumNotes[yZone]
             
@@ -243,7 +243,7 @@ def playNotes( synthNow, octaveNow, moveData ):
         if (time.time() - menuTime > menuTimeout) :  
             menuLock = False  # unlock motion menu after two seconds
     
-    if noteDoubleOn:      # Generate two notes based on contour x, y rather than one
+    if noteDoubleOn:    # Generate two notes based on contour x, y rather than one
         play([note1, note2])
         sample(drum1, drum2)
     else:
