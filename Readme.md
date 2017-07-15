@@ -106,14 +106,17 @@ Edit the config.py file and set variables as per comments
     cd ~./sonic-track
     nano config.py
  
-The notesPlayOn=True will turn on notes and drumsPlayOn will turn on drum session or you can select both if
+The notePlayOn=True will turn on notes and drumPlayOn=True will turn on drum session or you can select both if
 you are daring.  I recommend just one at a time to begin with.
 sonic-track.py uses motion contour center and width and height eg x, y, h, w motion data.
 These values are used to generate notes and or drums and can also change sleep value if enambled.  Sound values are send
 to sonic-pi interface to create sounds.  Sounds can be modified using synth settings per config.py synthPicks.  The reference numbers
 are from the synthList and the synthPicks list can contain any number of values separated by commas and
  arranged in any order.  These can be changed when sonic-track.sh is running my creating movement in the hotspot area
-(default is top left corner 1/5 of the screen height and width. 
+(default is top left corner 1/5 of the screen height and width.
+There are several template config.py files to assist in setting up multiple configurations. These can be copied over
+the original config.py.  You can also save custom configurations to any filename then copy over the config.py file
+to use it.  You may want to keep a backup copy of any config.py files that will be overwritten 
         
 For more information about psonic see https://github.com/gkvoelkl/python-sonic    
 and midi values see  http://www.electronics.dit.ie/staff/tscarff/Music_technology/midi/midi_note_numbers_for_octaves.htm
