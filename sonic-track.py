@@ -194,6 +194,7 @@ class WebcamVideoStream:
     def stop(self):
         # indicate that the thread should be stopped
         self.stopped = True
+        self.stream.release()
 
 #-----------------------------------------------------------------------------------------------
 def trackPoint(grayimage1, grayimage2):
