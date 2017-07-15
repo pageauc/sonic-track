@@ -385,17 +385,18 @@ def sonicTrack():
                                                           cvGreen, LINE_THICKNESS)
 
         if windowOn:
-            if synthHotOn:    # Box top left indicating synthHotOn Area
-                cv2.rectangle(image2,(0,0), synthHotxy, cvBlue, LINE_THICKNESS)
-                synthText = synthList[synthPicks[synthNow]][1]
-                cv2.putText( image2, synthText, (5, int(synthHotxy[1]/2)),
-                                cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
-            if octaveHotOn:  # Box top right indicating octave HotOn Area
-                cv2.rectangle(image2,(CAMERA_WIDTH - octaveHotxy[0], 0),
-                                     (CAMERA_WIDTH - 1,octaveHotxy[1]), cvBlue, LINE_THICKNESS)
-                octaveText = ("octave %i" % octavePicks[octaveNow])
-                cv2.putText( image2, octaveText, (CAMERA_WIDTH - int(octaveHotxy[0] - 5), int(octaveHotxy[1]/2)),
-                                cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
+            if notePlayOn:
+                if synthHotOn:    # Box top left indicating synthHotOn Area
+                    cv2.rectangle(image2,(0,0), synthHotxy, cvBlue, LINE_THICKNESS)
+                    synthText = synthList[synthPicks[synthNow]][1]
+                    cv2.putText( image2, synthText, (5, int(synthHotxy[1]/2)),
+                                    cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
+                if octaveHotOn:  # Box top right indicating octave HotOn Area
+                    cv2.rectangle(image2,(CAMERA_WIDTH - octaveHotxy[0], 0),
+                                         (CAMERA_WIDTH - 1,octaveHotxy[1]), cvBlue, LINE_THICKNESS)
+                    octaveText = ("octave %i" % octavePicks[octaveNow])
+                    cv2.putText( image2, octaveText, (CAMERA_WIDTH - int(octaveHotxy[0] - 5), int(octaveHotxy[1]/2)),
+                                    cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
             if windowDiffOn:
                 cv2.imshow('Difference Image', differenceImage)
             if windowThreshOn:
