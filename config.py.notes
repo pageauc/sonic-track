@@ -37,8 +37,8 @@ windowThreshOn = False  # Show OpenCV image Threshold window
 
 # Motion Note Settings
 # --------------------
-notePlayOn = True     # True= Turn on Play Notes option  False= Off
-noteDoubleOn = False   # Play two notes rather than one per contour
+notePlayOn = True      # True= Turn on Play Notes option  False= Off
+noteDoubleOn = True    # Play two notes rather than one per contour
 noteSleepMin = 0.1     # default= 0.1 seconds delay between notes played
 noteSleepMax = 0.4     # default= 0.4 max delay based on h of contour
 noteSleepVarOn = True  # default= True Turn On Variable notes sleep time based on screen y position
