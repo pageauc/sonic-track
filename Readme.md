@@ -66,10 +66,9 @@ You should set the appropriate camera hflip, vflip as appropriate.
 You can customize the synthPicks.  This is a comma delimited list of entries
  from the synthList above.  You can select any number and arrange them in any order. 
 This list is used to to switch synth when motion is detected in the hotspot area
- (usually top/left corner)  You can also select a default_octave from the list
- of octave's above. You may also want to look at notesSleepOn, notesSleepVarOn, 
- notesSleep, notenotes_midi, octave triggers, Etc. See other variables and
- comments for additional variable customization settings.    
+ (usually top/left corner)  You can also select a noteOctave from the list
+ of octave's above. You may also want to look at notesSleepOnList Entries, notesSleepVarOn, Etc. 
+ See other variables and comments for additional variable customization settings.    
 From SSH session, console or GUI desktop terminal session execute the following commands.
 Make sure a speaker is connected to the pi before starting.
 
@@ -107,9 +106,11 @@ Edit the config.py file and set variables as per comments
     cd ~./sonic-track
     nano config.py
  
-The play_notes function uses the motion contour center and width and height eg x, y, h, w motion variables.
-These values are used to generate notes, noteSleep and/or change octave based on contour area.  Sound values are send
-to sonic-pi interface.  Sounds can be changed using synth settings per config.py synthPicks.  The reference numbers
+The notesPlayOn=True will turn on notes and drumsPlayOn will turn on drum session or you can select both if
+you are daring.  I recommend just one at a time to begin with.
+sonic-track.py uses motion contour center and width and height eg x, y, h, w motion data.
+These values are used to generate notes and or drums and can also change sleep value if enambled.  Sound values are send
+to sonic-pi interface to create sounds.  Sounds can be modified using synth settings per config.py synthPicks.  The reference numbers
 are from the synthList and the synthPicks list can contain any number of values separated by commas and
  arranged in any order.  These can be changed when sonic-track.sh is running my creating movement in the hotspot area
 (default is top left corner 1/5 of the screen height and width. 
@@ -177,8 +178,6 @@ Kyle Hounslow using C here https://www.youtube.com/watch?v=X6rPdRZzgjg
 Thanks to Adrian Rosebrock jrosebr1 at http://www.pyimagesearch.com 
 for the PiVideoStream Class code available on github at
 https://github.com/jrosebr1/imutils/blob/master/imutils/video/pivideostream.py
-
-
 
 
 ## ---------- Other Raspberry Pi Projects Based on Motion Tracking ------------
