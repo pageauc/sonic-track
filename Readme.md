@@ -2,6 +2,8 @@
 #### Tracks camera motion contours x,y,w,h values and generates sounds via sonic-pi.  
 #### Uses pi-camera or webcam, python3, Opencv3, python-sonic, pythonosc, sonic-pi, powered speaker or HDMI TV
 
+### NEW Release 0.90 Adds drums and restructures code and variables
+
 #### YouTube Video (motion activated menus https://youtu.be/PQjpskPAtR0
 #### YouTube Video sonic-track into https://youtu.be/RCIUlv431E0
 
@@ -14,7 +16,7 @@ video movement to see what sounds are generated. You can also stand in front of 
 
 #### Some ideas I would like to work on
 
-* Air drum eg bongo drum feature activated by body movement
+* Air drum eg bongo drum feature activated by body movement  (0.90 Added air drums)
 * Simon type sound motion game to try to repeat a series of notes using body movement
  ( see hotspot game https://github.com/pageauc/hotspot-game )
 * Implement bird call type game to use motion tracking to pick the bird associated with
