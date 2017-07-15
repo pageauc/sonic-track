@@ -14,18 +14,6 @@ to an HDMI TV via HDMI cable and sound will redirect to TV speakers.
 I thought it would be interesting to point the camera at a fish tank or other source of
 video movement to see what sounds are generated. You can also stand in front of the camera and generate sounds via body movements.
 
-#### Some ideas I would like to work on
-
-* Air drum eg bongo drum feature activated by body movement  (0.90 Added air drums)
-* Simon type sound motion game to try to repeat a series of notes using body movement
- ( see hotspot game https://github.com/pageauc/hotspot-game )
-* Implement bird call type game to use motion tracking to pick the bird associated with
- a sound from an on screen image of different birds. I have a poke-pi demo that allows displaying images on screen (not published)
- it allows for interactively taking an image of a toy or object then you can use the small icon in the motion tracking
- environment to do something.  I was visualizing something like pokemon
-* Same as birds idea above but for any animals Eg farmyard or wild animals.
-* Control a device and give audio feed back.  Eg higher sound for higher settings.
-
 This program demo is a very basic setup but more elaborate sonic-pi sound generation algorithms are possible.
 
 ### How to Install
@@ -163,14 +151,23 @@ a quad core raspberry pi with the latest Jessie build installed.
 * YouTube sonic-track demo https://youtu.be/RCIUlv431E0
 * GitHub Repo https://github.com/pageauc/sonic-track
 
-### Enhancements List
+#### Some ideas I would like to work on
 
-* Save motion notes to a csv file
+* Air drum eg bongo drum feature activated by body movement  (release 0.90 Added air drums)
+* Simon type sound motion game to try to repeat a series of notes using body movement
+ ( see hotspot game https://github.com/pageauc/hotspot-game )
+* Implement bird call type game to use motion tracking to pick the bird associated with
+ a sound from an on screen image of different birds. I have a poke-pi demo that allows displaying images on screen (not published)
+ it allows for interactively taking an image of a toy or object then you can use the small icon in the motion tracking
+ environment to do something.  I was visualizing something like pokemon
+* Same as birds idea above but for any animals Eg farmyard or wild animals.
+* Control a device and give audio feed back.  Eg higher sound for higher settings.
+* Save motion notes to a csv file or other data format
 * Read from a video file and generate notes based on motion tracking
 * Read csv file and replay previous notes or read from another data file and convert to
 note ranges required for input
 * Create alternate configuration settings via separate config.py files.  This would allow
-changing how notes are generated.
+changing how notes are generated. (partly done for drums and notes)
 * Setup a method to easily change synth settings  (implemented pickList)
 
 ### Credits  
