@@ -2,7 +2,7 @@
 #### Tracks camera motion contours x,y,w,h values and generates sounds via sonic-pi.  
 #### Uses pi-camera or webcam, python3, Opencv3, python-sonic, pythonosc, sonic-pi, powered speaker or HDMI TV
 
-### NEW Release 0.90 Adds drums and restructures code and variables
+### NEW Release 0.91 Adds drums and restructures code and variables and adds option for zone grid lines on GUI
 
 #### YouTube Video (motion activated menus https://youtu.be/PQjpskPAtR0
 #### YouTube Video sonic-track into https://youtu.be/RCIUlv431E0
