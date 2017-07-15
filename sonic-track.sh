@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "INFO - $0  written by Claude Pageau"
+echo "INFO - $0 ver 0.91 written by Claude Pageau"
 echo ""
 if [ -z "$(pgrep -f sonic-pi)" ] ; then
   echo "INFO - run xauth list to find displays"
@@ -16,6 +16,6 @@ else
   echo "INFO - sonic-pi is already running"
 fi
 
-echo "INFO - starting $0"
+echo "INFO - starting sonic-track.py"
 ./sonic-track.py
 

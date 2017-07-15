@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-progVer = "ver 0.90"
+progVer = "ver 0.91"
 
 import os
 mypath=os.path.abspath(__file__)       # Find the full path of this python script
@@ -66,7 +66,7 @@ notesTotal = len(octaveList[octaveStart][1])
 notesHorizZone = int(CAMERA_WIDTH / (notesTotal - 1)) # Calculate Zone Area index
 notesVertZone = int(CAMERA_HEIGHT /(notesTotal - 1))
 
-drumHotxy = (int(CAMERA_WIDTH/drumHotSize),int(CAMERA_HEIGHT/drumHotSize))
+drumHotxy = (int(CAMERA_WIDTH/drumHotSize),int(CAMERA_HEIGHT/drumHotSize)) #Not implemented
 drumsTotal = len(drumPicks)
 drumHorizZone = int(CAMERA_WIDTH / (drumsTotal - 1)) # Calculate Zone Area index
 drumVertZone = int(CAMERA_HEIGHT /(drumsTotal - 1))
@@ -397,6 +397,13 @@ def sonicTrack():
                     octaveText = ("octave %i" % octavePicks[octaveNow])
                     cv2.putText( image2, octaveText, (CAMERA_WIDTH - int(octaveHotxy[0] - 5), int(octaveHotxy[1]/2)),
                                     cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
+                                    
+            if drumPlayOn and drumHotOn:
+                for i in range ( drumHorizZone, CAMERA_WIDTH, drumHorizZone):
+                    cv2.line( image2, (i, 0), (i,CAMERA_HEIGHT ), cvBlue, 1 )
+                if drumDoubleOn:
+                    for i in range ( drumVertZone, CAMERA_HEIGHT, drumVertZone):
+                        cv2.line( image2, (0, i), (CAMERA_WIDTH, i ), cvBlue, 1 )          
             if windowDiffOn:
                 cv2.imshow('Difference Image', differenceImage)
             if windowThreshOn:
@@ -417,7 +424,7 @@ def sonicTrack():
 if __name__ == '__main__':
     try:
         while True:
-            # Save images to an in-program stream
+            # Save Cam images frames to an in-program stream
             # Setup video stream on a processor Thread for faster speed
             if WEBCAM:   #  Start Web Cam stream (Note USB webcam must be plugged in)
                 print("Initializing USB Web Camera ....")

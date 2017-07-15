@@ -28,7 +28,7 @@ CAMERA_FRAMERATE = 10  # frame rate for video stream default=55 90 max for V1 ca
 # OpenCV Settings
 # ---------------
 MIN_AREA = 100      # Excludes all contours less than or equal to this Area
-SHOW_CIRCLE = False # True= Show circle for movement, False= Show rectancle on screen
+SHOW_CIRCLE = True  # True= Show circle for movement, False= Show rectancle on screen
 CIRCLE_SIZE = 5     # diameter of circle to show motion location in window
 LINE_THICKNESS = 1  # thickness of bounding line in pixels
 windowBigger = 2    # Image Resize multiplier for Images
@@ -37,7 +37,7 @@ windowThreshOn = False  # Show OpenCV image Threshold window
 
 # Motion Note Settings
 # --------------------
-notePlayOn = False
+notePlayOn = False     # True= Turn on Play Notes option  False= Off
 noteDoubleOn = False   # Play two notes rather than one per contour
 noteSleepMin = 0.1     # default= 0.1 seconds delay between notes played
 noteSleepMax = 0.4     # default= 0.4 max delay based on h of contour
@@ -51,14 +51,13 @@ octaveHotSize = 5    # Division factor for cam image size xy to allocate to Hot 
 
 # motion Drum Settings
 # --------------------
-drumPlayOn = True
-drumDoubleOn = True
-drumSleepMin = .5
-drumSleepMax = 1.0
-drumSleepVarOn = False
-
-drumHotOn = True
-drumHotSize = 5
+drumPlayOn = True    # True= Turn on Drum Motion  False = Off
+drumDoubleOn = True  # play two drums one for x zone position and one for y zone
+drumSleepMin = .5    # default= .5
+drumSleepMax = 1.0   # default= 1.0
+drumSleepVarOn = False  # Turn on drum variable sleep based on contour h value
+drumHotOn = False    # True= Display drum Zones Grid Lines on GUI Window
+drumHotSize = 5      # Not implemented
 
 # Optional Drum Treads  # Edit appropriate function to customize
 drumKickOn = False      # Thread for Kick Drum
@@ -157,4 +156,4 @@ drumList = [
 (19,'drum_roll')
 ]
 # Select drumPicks numbers above comma separated (any number an order)
-drumPicks = [18, 4, 6, 8, 10, 12, 17, 19]
+drumPicks = [18, 4, 5, 0, 10, 8, 18, 18]
