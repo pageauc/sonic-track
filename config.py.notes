@@ -37,7 +37,7 @@ windowThreshOn = False  # Show OpenCV image Threshold window
 
 # Motion Note Settings
 # --------------------
-notePlayOn = False
+notePlayOn = True
 noteDoubleOn = False   # Play two notes rather than one per contour
 noteSleepMin = 0.1     # default= 0.1 seconds delay between notes played
 noteSleepMax = 0.4     # default= 0.4 max delay based on h of contour
@@ -51,7 +51,7 @@ octaveHotSize = 5    # Division factor for cam image size xy to allocate to Hot 
 
 # motion Drum Settings
 # --------------------
-drumPlayOn = True
+drumPlayOn = False
 drumDoubleOn = True
 drumSleepMin = .5
 drumSleepMax = 1.0

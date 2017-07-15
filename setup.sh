@@ -1,6 +1,6 @@
 #!/bin/bash
 # Convenient sonic-track-install.sh script written by Claude Pageau 1-Jul-2016
-ver="0.40"
+ver="0.90"
 DEST_DIR='sonic-track'  # Default folder install location
 
 cd ~
@@ -39,6 +39,10 @@ fi
 wget -O config-new.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/config.py
 if [ $? -ne 0 ] ;  then
   wget -O config.py https://raw.github.com/pageauc/sonic-track/master/config.py
+  wget -O config.py.default https://raw.github.com/pageauc/sonic-track/master/config.py.default
+  wget -O config.py.drums https://raw.github.com/pageauc/sonic-track/master/config.py.drums
+  wget -O config.py.notes https://raw.github.com/pageauc/sonic-track/master/config.py.notes
+  wget -O config.py.notes-drums https://raw.github.com/pageauc/sonic-track/master/config.py.notes-drums
   wget -O sonic-track.sh https://raw.github.com/pageauc/sonic-track/master/sonic-track.sh  
   wget -O sonic-track.py https://raw.github.com/pageauc/sonic-track/master/sonic-track.py
   wget -O setup.sh https://raw.github.com/pageauc/sonic-track/master/setup.sh  
@@ -47,6 +51,10 @@ if [ $? -ne 0 ] ;  then
   wget -O psonic.py https://raw.github.com/gkvoelkl/python-sonic/master/psonic.py
 else
   wget -O config.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/config.py
+  wget -O config.py.default -q --show-progress https://raw.github.com/pageauc/sonic-track/master/config.py.default
+  wget -O config.py.drums -q --show-progress https://raw.github.com/pageauc/sonic-track/master/config.py.drums
+  wget -O config.py.notes -q --show-progress https://raw.github.com/pageauc/sonic-track/master/config.py.notes
+  wget -O config.py.notes-drums -q --show-progress https://raw.github.com/pageauc/sonic-track/master/config.py.notes-drums
   wget -O sonic-track.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/sonic-track.sh
   wget -O sonic-track.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/sonic-track.py
   wget -O setup.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/setup.sh 

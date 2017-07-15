@@ -1,5 +1,5 @@
 # Config.py file for motion-track.py
-# requires sonic_track 0.83 or greater
+# requires sonic_track 0.90 or greater
 
 # Display Settings
 # ----------------
@@ -25,23 +25,48 @@ CAMERA_HFLIP = False   # Flip the camera image horizontally if required
 CAMERA_ROTATION = 0    # Rotate camera image valid values are 0, 90, 180, 270
 CAMERA_FRAMERATE = 10  # frame rate for video stream default=55 90 max for V1 cam. V2 can be higher
 
-# Motion Menu Settings
-# Activate on screen motion menu pick box
+# OpenCV Settings
+# ---------------
+MIN_AREA = 100      # Excludes all contours less than or equal to this Area
+SHOW_CIRCLE = False # True= Show circle for movement, False= Show rectancle on screen
+CIRCLE_SIZE = 5     # diameter of circle to show motion location in window
+LINE_THICKNESS = 1  # thickness of bounding line in pixels
+windowBigger = 2    # Image Resize multiplier for Images
+windowDiffOn = False  # Show OpenCV image difference window
+windowThreshOn = False  # Show OpenCV image Threshold window
+
+# Motion Note Settings
+# --------------------
+notePlayOn = False
+noteDoubleOn = False   # Play two notes rather than one per contour
+noteSleepMin = 0.1     # default= 0.1 seconds delay between notes played
+noteSleepMax = 0.4     # default= 0.4 max delay based on h of contour
+noteSleepVarOn = True  # default= True Turn On Variable notes sleep time based on screen y position
+
 synthHotOn = True  # Turn on HotSpot to cycle through synthPicks
 synthHotSize = 5   # Divide screen W,H by synthHotSize determines hotSpot Area W,H
 
 octaveHotOn = True   # Turn on HotSpot to cycle through octavePicks via motion hotspot
 octaveHotSize = 5    # Division factor for cam image size xy to allocate to Hot Area
 
-# Not yet implemented.  Using Threads
+# motion Drum Settings
+# --------------------
+drumPlayOn = True
+drumDoubleOn = True
+drumSleepMin = .5
+drumSleepMax = 1.0
+drumSleepVarOn = False
+
 drumHotOn = True
 drumHotSize = 5
 
-drumKickOn = True     # Thread for Kick Drum
-drumSnareOn = True    # Thread for Snare Drum
-drumBassOn = True     # Thread for Random effects
+# Optional Drum Treads  # Edit appropriate function to customize
+drumKickOn = False      # Thread for Kick Drum
+drumSnareOn = False     # Thread for Snare Drum
+drumBassOn = False      # Thread for Random effects
 
-# List of Available sythesizers and a reference number for adding items to synthPick list below
+# List of Available sythesizers
+# Add Reference number Selections to synthPicks list below
 synthList = [
 (0,'dull_bell'),
 (1,'pretty_bell'),
@@ -107,7 +132,8 @@ octaveList = [
 # Select octavePicks numbers above comma separated (any number an order)
 octavePicks = [ 4, 5, 6, 7 ]
 
-## Drum Sounds
+# List of Available Drum Sounds
+# Add Reference number Selections to drumPicks list below
 drumList = [
 (0,'drum_heavy_kick'),
 (1,'drum_tom_mid_soft'),
@@ -131,25 +157,4 @@ drumList = [
 (19,'drum_roll')
 ]
 # Select drumPicks numbers above comma separated (any number an order)
-drumPicks = [0, 8, 18, 10]
-
-# python-sonic midi notes settings
-# --------------------------------
-noteSleepVarOn = True # default= True Turn On Variable notes sleep time based on screen y position
-noteDoubleOn = False  # Play two notes rather than one per contour
-noteSleepMin = 0.1     # default= 0.1 seconds delay between notes played
-noteSleepMax = 0.4     # default= 0.4 max delay based on h of contour
-
-# OpenCV Settings
-# ---------------
-MIN_AREA = 100      # Excludes all contours less than or equal to this Area
-SHOW_CIRCLE = False # True= Show circle for movement, False= Show rectancle on screen
-CIRCLE_SIZE = 5     # diameter of circle to show motion location in window
-LINE_THICKNESS = 1  # thickness of bounding line in pixels
-windowBigger = 2    # Image Resize multiplier for Images
-windowDiffOn = False  # Show OpenCV image difference window
-windowThreshOn = False  # Show OpenCV image Threshold window
-
-# You should not have to change these settings
-THRESHOLD_SENSITIVITY = 25
-BLUR_SIZE = 10
+drumPicks = [18, 4, 6, 8, 10, 12, 17, 19]
