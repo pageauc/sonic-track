@@ -396,12 +396,6 @@ def sonicTrack():
                 octaveText = ("octave %i" % octavePicks[octaveNow])
                 cv2.putText( image2, octaveText, (CAMERA_WIDTH - int(octaveHotxy[0] - 5), int(octaveHotxy[1]/2)),
                                 cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
-            if drumHotOn:  # Box top right indicating drumHotOn Area below synth box
-                cv2.rectangle(image2,(0,synthHotxy[1]), synthHotxy[0], synthHotxy[1] + drumHotxy[0], cvBlue, LINE_THICKNESS)
-                drumText = drumList[drumPicks[drumNow]][1]
-                cv2.putText( image2, drumText, (5, int(synthHotxy[1] + (drumHotxy[1])/2)),
-                                cv2.FONT_HERSHEY_SIMPLEX, FONT_SCALE , cvGreen, 1)
-
             if windowDiffOn:
                 cv2.imshow('Difference Image', differenceImage)
             if windowThreshOn:
