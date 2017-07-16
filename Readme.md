@@ -4,8 +4,10 @@
 
 ### NEW Release 0.91 Adds drums and restructures code and variables and adds option for zone grid lines on GUI
 
-#### YouTube Video (motion activated menus https://youtu.be/PQjpskPAtR0
-#### YouTube Video sonic-track into https://youtu.be/RCIUlv431E0
+#### YouTube Air Drum Demo https://youtu.be/PSrzbeVX8DE
+#### YouTube Air Note Demo https://youtu.be/dC26PUYYR5E
+#### YouTube Motion Activated Menus https://youtu.be/PQjpskPAtR0
+#### YouTube sonic-track.py Intro https://youtu.be/RCIUlv431E0
 
 ### Introduction
 This demo app sends camera movement tracking data to sonic-pi music program.  sonic-track sends data to sonic-pi via psonic.py and pythonosc.
