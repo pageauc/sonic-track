@@ -7,7 +7,7 @@ baseDir=mypath[0:mypath.rfind("/")+1]  # get the path location only (excluding s
 baseFileName=mypath[mypath.rfind("/")+1:mypath.rfind(".")]
 progName = os.path.basename(__file__)
 
-print("%s %s using sonic-pi, pi-camera, python3 and OpenCV" % (progName, progVer))
+print("%s %s using sonic-pi, web or pi-camera, python3 and OpenCV" % (progName, progVer))
 print("Loading Please Wait ....")
 
 # Check for config variable file to import and error out if not found.

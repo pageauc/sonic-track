@@ -42,20 +42,19 @@ From logged in RPI SSH session or console terminal perform the following.
 
 ### Opencv3 Install (if required)
 sonic-track.py requires opencv3 to be installed on the latest RPI Jessie disto.
-I have written a menu driven install script called cv3-setup.sh.  Use this if
-you do not have opencv3 already installed. cv3-setup.sh menu picks allow updating,
-installing dependencies, downloads, cmake, compile and make install of opencv 3.0.0.
-I tried opencv 3.2.0 but had errors so it is best to stick with 3.0.0 per this script.
+I have written a menu driven install script called cv32-setup.sh.  Use this if
+you do not have opencv3 already installed. cv32-setup.sh menu picks allow updating,
+installing dependencies, downloads, cmake, compile and make install of opencv 3.2.0.
 To Run the whiptail menu setup script.  From a logged in ssh or terminal session run
 
     cd ~/sonic-track
-    ./cv3-setup.sh    
+    ./cv32-setup.sh    
  
 You will be asked to reboot at certain steps.  
 
 More information is available   
-here http://www.pyimagesearch.com/2015/10/26/how-to-install-opencv-3-on-raspbian-jessie/ 
-    
+here https://github.com/Tes3awy/OpenCV-3.2.0-Compiling-on-Raspberry-Pi 
+
 ### How to Run
 Default is SSH or Terminal console only display. Make sure pixel desktop is
  enabled and logged in.  This can be done from raspi-config setting.
@@ -64,28 +63,25 @@ This is required for the sonic-track.sh to start sonic-pi on the desktop from
 
 Use Nano to Edit config.py variable settings. Select PiCamera or USB web camera
  depending on what you have installed or want to use. 
-You should set the appropriate camera hflip, vflip as appropriate.
-You can customize the synthPicks.  This is a comma delimited list of entries
- from the synthList above.  You can select any number and arrange them in any order. 
+If images are oriented wrong then set camera hflip, vflip as appropriate.
+
+Customize the synthPicks by entering comma delimited number entries
+ from the synthList above.  The synth numbers can be arranged in any order. 
 This list is used to to switch synth when motion is detected in the hotspot area
- (usually top/left corner)  You can also select a noteOctave from the list
- of octave's above. You may also want to look at notesSleepOnList Entries, notesSleepVarOn, Etc. 
- See other variables and comments for additional variable customization settings.    
-From SSH session, console or GUI desktop terminal session execute the following commands.
+ (usually top/left corner)  The noteOctavePicks can also be customized from the list
+ of octaveList above. You may also want to look at notesSleepOnList Entries, notesSleepVarOn, Etc. 
+ See other variables and comments for additional variable customization settings. 
+ 
+To Run sonic-track from SSH session, console or GUI desktop terminal session execute the following commands.
 Make sure a speaker is connected to the pi before starting.
 
     cd ~/sonic-track
     ./sonic-track.sh   
-
-To display opencv window on Raspberry Pi desktop set config.py variable below. 
-    
-    cd ~/sonic-track
-    nano config.py
-    
-#### GUI RPI Desktop display video
+        
+#### GUI RPI Desktop Display Video
 With a display, keyboard and mouse attached to the RPI, Login to the Pixel Desktop
 
-Use desktop menu to open a termina session.  The use nano to set the following
+Use desktop menu to open a terminal session.  Use nano to set the following
 config.py variable then ctrl-x y to save change(s)
 
     cd ~/sonic-track
@@ -95,7 +91,7 @@ edit the following setting the ctrl-x y to save
     
     windowOn = True
 
-You can either start sonic-pi from the desktop the in the terminal window start sonic-track.py
+You can either start sonic-pi from the desktop then in the terminal window start sonic-track.py
 
 or from the desktop terminal session run
 
@@ -130,15 +126,14 @@ require reprogramming how notes are generated via x,y,w,h values.
     nano sonic-track.py    
 
 ### Prerequisites
-* Recomend a quad core Raspberry Pi computer running with an up-to-date Raspbian Jessie distro
+* Recommend a quad core Raspberry Pi computer running with an up-to-date Raspbian Jessie distro
 * RPI camera module or USB Web Cam installed/connected configured and tested to work. 
 * Dependencies will be installed via setup.sh depending on your previous installs.  
 * opencv3 is required and can be installed via cv3-setup.sh on menubox.sh menu pick (if required)
 * sonic-pi is installed as part of the Jessie full install distro (not Lite)
-* Optional Powered speaker including cables between RPI 3.5 mm audio/video plug and speaker if not using HDMI TV
+* An HDMI TV connected to HDMI port on RPI or a Powered speaker including cable between RPI 3.5 mm audio/video plug and speaker
 
-You will also need an HDMI TV and Cable to the RPI or a speaker plugged into the 3.5mm audio/video jack 
-similar to these cables https://www.adafruit.com/product/2881 
+Speaker 3.5mm audio/video jack similar to these cables https://www.adafruit.com/product/2881 
 or https://www.amazon.com/Parts-Express-3-5mm-Plug-Cable/dp/B0007V6JCK  
 these are also available from other vendors.  Just google 3.5mm audio/video jack
 * You may also need a cable similar to this 

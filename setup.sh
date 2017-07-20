@@ -1,6 +1,6 @@
 #!/bin/bash
 # Convenient sonic-track-install.sh script written by Claude Pageau 1-Jul-2016
-ver="0.90"
+ver="0.95"
 DEST_DIR='sonic-track'  # Default folder install location
 
 cd ~
@@ -45,8 +45,8 @@ if [ $? -ne 0 ] ;  then
   wget -O config.py.notes-drums https://raw.github.com/pageauc/sonic-track/master/config.py.notes-drums
   wget -O sonic-track.sh https://raw.github.com/pageauc/sonic-track/master/sonic-track.sh  
   wget -O sonic-track.py https://raw.github.com/pageauc/sonic-track/master/sonic-track.py
-  wget -O setup.sh https://raw.github.com/pageauc/sonic-track/master/setup.sh  
-  wget -O cv3-setup.sh https://raw.github.com/pageauc/sonic-track/master/cv3-setup.sh
+  wget -O setup.sh https://raw.github.com/pageauc/sonic-track/master/setup.sh 
+  wget -O cv32-setup.sh https://raw.github.com/pageauc/opencv3-setup/master/cv32-setup.sh  
   wget -O Readme.md https://raw.github.com/pageauc/sonic-track/master/Readme.md
   wget -O psonic.py https://raw.github.com/gkvoelkl/python-sonic/master/psonic.py
 else
@@ -58,7 +58,7 @@ else
   wget -O sonic-track.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/sonic-track.sh
   wget -O sonic-track.py -q --show-progress https://raw.github.com/pageauc/sonic-track/master/sonic-track.py
   wget -O setup.sh -q --show-progress https://raw.github.com/pageauc/sonic-track/master/setup.sh 
-  wget -O cv3-setup.sh -q --show-progress  https://raw.github.com/pageauc/sonic-track/master/cv3-setup.sh  
+  wget -O cv32-setup.sh -q --show-progress https://raw.github.com/pageauc/opencv3-setup/master/cv32-setup.sh  
   wget -O Readme.md -q --show-progress https://raw.github.com/pageauc/sonic-track/master/Readme.md
   wget -O psonic.py -q --show-progress https://raw.github.com/gkvoelkl/python-sonic/master/psonic.py
 fi
