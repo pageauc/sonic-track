@@ -106,7 +106,7 @@ git clone https://github.com/gkvoelkl/python-sonic
 cd python-sonic
 sudo python3 setup.py install
 cd ..
-rm -r python-sonic
+sudo rm -r python-sonic
 
 cd $DIR
 # Check if install.sh was launched from sonic-track folder
@@ -116,10 +116,12 @@ if [ "$DIR" != "$INSTALL_PATH" ]; then
     rm setup.sh
   fi
 fi
-
+sudo rm -f psonic.py
 echo "Done Dependencies"
 
-echo "Make sure you have
+echo "
+                  Instructions
+
 1 opencv3 installed see https://github.com/pageauc/opencv3-setup
 2 speaker connected or RPI on HDTV via HTMI cable
 3 picamera or webcam installed and working
