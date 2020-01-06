@@ -46,7 +46,7 @@ I have written a menu driven install script on my GitHub repo here https://githu
 you do not have opencv3 already installed. cv3-setup.sh is a whiptail menu that can walk you through installing 
 opencv from source.  The menu system can select opencv version, installs dependencies, downloads source, perform cmake,
 run compile perform make install of selected opencv version.  
-For more details See github [Readme.md](https://github.com/pageauc/sonic-track/blob/master/Readme.md) 
+For more details See github [Readme.md](https://github.com/pageauc/opencv3-setup/blob/master/Readme.md) 
 
 ### How to Run
 Default is SSH or Terminal console only display. Make sure pixel desktop is
