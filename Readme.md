@@ -41,19 +41,12 @@ From logged in RPI SSH session or console terminal perform the following.
     ./setup.sh
 
 ### Opencv3 Install (if required)
-sonic-track.py requires opencv3 to be installed on the latest RPI Jessie disto.
-I have written a menu driven install script called cv32-setup.sh.  Use this if
-you do not have opencv3 already installed. cv32-setup.sh menu picks allow updating,
-installing dependencies, downloads, cmake, compile and make install of opencv 3.2.0.
-To Run the whiptail menu setup script.  From a logged in ssh or terminal session run
-
-    cd ~/sonic-track
-    ./cv32-setup.sh    
- 
-You will be asked to reboot at certain steps.  
-
-More information is available   
-here https://github.com/Tes3awy/OpenCV-3.2.0-Compiling-on-Raspberry-Pi 
+sonic-track.py requires opencv3 to be installed on the latest RPI disto.
+I have written a menu driven install script on my GitHub repo here https://github.com/pageauc/opencv3-setup.  Use this if
+you do not have opencv3 already installed. cv3-setup.sh is a whiptail menu that can walk you through installing 
+opencv from source.  The menu system can select opencv version, installs dependencies, downloads source, perform cmake,
+run compile perform make install of selected opencv version.  For more details See github [Readme.md](https://github.com/pageauc/opencv3-setup/Readme.md) 
+for more details
 
 ### How to Run
 Default is SSH or Terminal console only display. Make sure pixel desktop is
