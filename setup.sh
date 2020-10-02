@@ -98,6 +98,7 @@ echo "5 - Installing sonic-track Dependencies"
 echo ""
 sudo apt-get install -yq python-picamera
 sudo apt-get install -yq python3-picamera
+sudo apt-get install -yq python3-opencv  # Raspbian Buster Installs opencv 3.2 (won't change existing)
 sudo apt-get install -yq python-pip
 sudo apt-get install -yq git
 sudo apt-get install -yq dos2unix
