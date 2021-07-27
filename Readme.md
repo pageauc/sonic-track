@@ -3,6 +3,7 @@
 #### Uses pi-camera or webcam, python3, Opencv3, python-sonic, pythonosc, sonic-pi, powered speaker or HDMI TV
 
 ### NEW Release 0.91 Adds drums and restructures code and variables and adds option for zone grid lines on GUI
+### ver 0.95 of setup.sh purges previous sonic-pi and installs latest https://sonic-pi.net/files/releases/v3.3.1/sonic-pi_3.3.1_1_armhf.deb
 
 #### YouTube Air Drum Demo https://youtu.be/PSrzbeVX8DE
 #### YouTube Air Note Demo https://youtu.be/dC26PUYYR5E
