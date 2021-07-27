@@ -112,7 +112,7 @@ sudo rm -r python-sonic
 
 echo "update sonic-pi to latest sonic-pi_3.3.1_1"
 echo "Downloading.  Please Wait"
-wget -O https://sonic-pi.net/files/releases/v3.3.1/sonic-pi_3.3.1_1_armhf.deb
+wget -O sonic-pi_3.3.1_1_armhf.deb -q --show-progress https://raw.github.com/pageauc/sonic-track/master/sonic-pi_3.3.1_1_armhf.deb
 
 echo "Removing previous version of sonic-pi"
 sudo apt purge -y sonic-pi 
