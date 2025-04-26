@@ -105,7 +105,6 @@ sudo apt-get install -yq dos2unix
 sudo pip install python-osc
 git clone https://github.com/gkvoelkl/python-sonic
 cd python-sonic
-cp README.rst README.txt
 sudo python3 setup.py install
 cd ..
 sudo rm -r python-sonic
@@ -115,7 +114,7 @@ echo "Downloading.  Please Wait"
 wget -O sonic-pi_3.3.1_1_armhf.deb -q --show-progress https://raw.github.com/pageauc/sonic-track/master/sonic-pi_3.3.1_1_armhf.deb
 
 echo "Removing previous version of sonic-pi"
-sudo apt purge -y sonic-pi 
+sudo apt purge -y sonic-pi
 echo "Installing sonic-pi_3.3.1_1_armhf.deb"
 sudo dpkg -i sonic-pi_3.3.1_1_armhf.deb
 
